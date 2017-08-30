@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/blogz.png') }}" />
+    <link rel='stylesheet' type='text/css' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>       
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/material-icons.css') }}" media="screen,projection">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/materialize.css') }}" media="screen,projection">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}" media="screen,projection">
+    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/materialize.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
+    <title>LaunchCode Attendance</title>
+</head>
+<body>
+    <header>
+        <div class='navbar-fixed'>
+            <nav>
+                <div class="nav-wrapper">
+                    <ul class="right">
+                        {% if session['teacher'] %}
+                        <li>{{ teacher.title() }}</a></li>
+                        <li><a href="/students">Students</a></li>
+                        <li><a href="/attendance">Attendance</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                        {% else %}
+                        <li><a href="/teacher_login">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="container">
+                © 2017 Copyright
+                <a href='https://github.com/anthony-becerra/launchcode-attendance' target='_blank'>Fork us on Github! <i class='ion-social-github'></i></a>
+            </div>
+        </div>
+    </footer> 
+</body>
+</html>
