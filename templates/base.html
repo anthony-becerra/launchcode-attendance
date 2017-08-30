@@ -21,7 +21,7 @@
                 <div class="nav-wrapper">
                     <ul class="right">
                         {% if session['teacher'] %}
-                        <li>{{ teacher.title() }}</a></li>
+                        <li>{{ teacher.title() }}</li>
                         <li><a href="/students">Students</a></li>
                         <li><a href="/attendance">Attendance</a></li>
                         <li><a href="/logout">Logout</a></li>
@@ -34,6 +34,7 @@
         </div>
     </header>
     <main>
+        <h3>{{ header }}</h3>
         {% block content %}
         {% endblock %}
     </main>
