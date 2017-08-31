@@ -5,6 +5,7 @@ from datetime import datetime, date
 # from sqlalchemy.sql import func 
 from app import app, db
 from models import Student, Teacher, Attendance
+from hash_tools import make_hash, check_hash
 
 # Main View
 @app.route('/')
