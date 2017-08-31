@@ -78,8 +78,9 @@ def teacher_login():
         return render_template("teacher_login.html")
 
 
-@app.route("/teacher_login", methods=['GET', 'POST'])
+@app.route("/teacher_signup", methods=['POST'])
 def teacher_signup():
+    
     if request.method == 'POST':
         
 
