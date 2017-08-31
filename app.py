@@ -1,9 +1,5 @@
-from flask import Flask, request, redirect, render_template, session, flash 
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, date 
-# from sqlalchemy import desc
-# from sqlalchemy.sql import func 
-
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
