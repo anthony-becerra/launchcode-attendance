@@ -3,7 +3,7 @@
 <div class="card large">
     <div class="card-tabs text">
         <ul class="tabs tabs-fixed-width">
-            <li class="tab"><a href="#login">Login</a></li>
+            <li class="tab"><a class="active" href="#login">Login</a></li>
             <li class="tab"><a href="#signup">Signup</a></li>
         </ul>
     </div>
@@ -53,21 +53,19 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <label for="password">Password</label>
-                        <input class='validate' id="password" name="password" type="password">
+                        <input class="validate" id="password" name="password" type="password">
                         <span class="error">{{ password_err }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <label for="verify">verify</label>
-                        <input class='validate' id="verify" name="verify" type="verify">
-                        <span class="error">{{ verify_err }}</span>
+                        <label for="confirm">Confirm Password</label>
+                        <input class="validate" id="confirm" name="confirm" type="password">
+                        <span class="error">{{ confirm_err }}</span>
                     </div>
                 </div>
                 <div class="row">
-                    <div>
-                        <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Signup</button>
-                    </div>
+                    <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Signup</button>
                 </div>
             </form>
         </div>
