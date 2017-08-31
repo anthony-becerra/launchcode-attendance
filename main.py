@@ -21,7 +21,7 @@ def teacher_login():
     if request.method == 'POST':
         return redirect("/")
     else:
-        session['email']="blah@gmail.com"
+        session['email'] = "blah@gmail.com"
         return render_template("teacher_login.html", title="Login", login="active")
 
 @app.route("/teacher_signup", methods=['POST'])

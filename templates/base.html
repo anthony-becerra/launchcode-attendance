@@ -37,7 +37,10 @@
             font-size: 1.75rem;
         }
         .dropdown-content li>a, .dropdown-content li>span{
-            color: rgba(000,188,212,0.7);
+            color: whitesmoke;
+        }
+        .dropdown-content{
+            min-width: 165px;
         }
     </style>
     <script>
@@ -62,10 +65,10 @@
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
                     </ul>
                     <a href="#" data-activates="mobile-demo" class="button"></a>
-                    <ul class="dropdown-content" id="dropdown">
-                        <li><a href="/" class="waves-effect"><i class="material-icons right">home</i>Home</a></li>
-                        <li><a href="/attendance" class="waves-effect"><i class="material-icons right">create</i>New Post</a></li>
-                        <li><a href="/students" class="waves-effect"><i class="material-icons right">create</i>New Post</a></li>
+                    <ul class="dropdown-content amber darken-2" id="dropdown">
+                        <li><a href="/" class="waves-effect waves-light"><i class="material-icons left">home</i>Home</a></li>
+                        <li><a href="/attendance" class="waves-effect waves-light"><i class="material-icons left">perm_contact_calendar</i>Attendance</a></li>
+                        <li><a href="/students" class="waves-effect waves-light"><i class="material-icons left">people</i>Students</a></li>
                     </ul>
                     <ul class="right">
                         <li><a class="right waves-effect waves-light waves-light" href="/logout">Logout</a></li>
