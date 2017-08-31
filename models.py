@@ -12,11 +12,7 @@ class Student(db.Model):
     attendance_date = db.relationship("Attendance", backref="owner")
     
 
-<<<<<<< HEAD
-    def __init__(self, first_name, last_name, pin=0000, cohort=1,city="Miami"):
-=======
     def __init__(self, first_name, last_name, pin=0000, cohort=1, city="Miami"):
->>>>>>> a191cc6c6209c8fb615bfcaefc6a2e23eb11753f
         self.first_name = first_name
         self.last_name = last_name
         self.pin = pin
