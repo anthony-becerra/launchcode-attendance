@@ -1,6 +1,7 @@
 from app import app, db
 from flask import request, redirect, render_template, session, flash 
 from models import Student, Teacher, Attendance
+<<<<<<< HEAD
 from datetime import datetime, date 
 from app import app, db
 from models import Student, Teacher, Attendance
@@ -12,23 +13,6 @@ import val
 # def index():
 #     return render_template('index.html')
 
-<<<<<<< HEAD
-session['username'] = username
-=======
-
-# # Teacher Login
-# @app.route('/teacher_login', methods=["POST", "GET"])
-# def login():
-#     return render_template('/teacher_login.html')
-
->>>>>>> a191cc6c6209c8fb615bfcaefc6a2e23eb11753f
-
-# # Teacher Signup
-# @app.route('/teacher_signup', methods=["POST", "GET"])
-# def login():
-#     return render_template('/teacher_login.html')
-
-
 # # Logout
 # @app.route('/logout')
 # def logout():
@@ -36,7 +20,6 @@ session['username'] = username
 #   return redirect('/')
 
 
-<<<<<<< HEAD
 # Student Login
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
@@ -58,12 +41,6 @@ def student_login():
     else:
         students = Student.query.order_by(Student.last_name).all()
         return render_template('student_login.html', title = 'Student Login', students = students)
-=======
-# # Student Login
-# @app.route('/student_login', methods=["POST", "GET"])
-# def student_login():
-#     return render_template('student_login.html')
->>>>>>> a191cc6c6209c8fb615bfcaefc6a2e23eb11753f
 
 
 # # Attendance List
@@ -77,16 +54,7 @@ def student_login():
 # def student_list():
 #     return render_template('student_list.html')
 
-@app.before_request
-def require_login():
-    blocked_routes = ['index', 'student_login', 'edit_student', 'attendance', 'add_student', 'students']
-    allowed_routes = ['teacher_login']
-    if request.endpoint not in allowed_routes and 'username' not in session:
-        return redirect('/teacher_login')
 
-@app.route("/")
-def index():
-    return render_template("index.html")
 
 
 @app.route("/teacher_login", methods=['GET', 'POST'])
