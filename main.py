@@ -56,17 +56,27 @@ def require_login():
 def index():
     return render_template("index.html")
 
+
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
+
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
         teacher = Teacher.query.filter_by(email = email).first()
-        
 
-        return redirect("/")
+        if teacher and check_hash(password, teacher.password):
+            session['email'] = email
+            return redirect('/')
+        elif teacher and not check_hash(password, teacher.password)::
+            flash('Wrong password')
+            return redirect('/teacher_login')
+        else:
+            flash('Wrong username')
+            return redirect('/teacher_login')
     else:
         return render_template("teacher_login.html")
+
 
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_signup():
