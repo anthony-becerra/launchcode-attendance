@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+=======
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+>>>>>>> 976167176aa3f2abaae5678c9a6c271b892de567
     <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/lc.png') }}" />
     <link rel='stylesheet' type='text/css' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>       
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/material-icons.css') }}" media="screen,projection">
@@ -15,12 +19,21 @@
 </head>
 <body>
     <header>
+<<<<<<< HEAD
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper cyan">
                     <ul class="right">
                         {% if session['username'] %}
                         <li>{{ session['username'].title() }}</li>
+=======
+        <div class='navbar-fixed'>
+            <nav>
+                <div class="nav-wrapper">
+                    <ul class="right">
+                        {% if session['teacher'] %}
+                        <li>{{ teacher.title() }}</li>
+>>>>>>> 976167176aa3f2abaae5678c9a6c271b892de567
                         <li><a href="/students">Students</a></li>
                         <li><a href="/attendance">Attendance</a></li>
                         <li><a href="/logout">Logout</a></li>
@@ -32,6 +45,7 @@
             </nav>
         </div>
     </header>
+<<<<<<< HEAD
     <main class="container">
         {% block content %}
         {% endblock %}
@@ -42,6 +56,18 @@
                     © 2017 Copyright
                     <a class="right" href='https://github.com/anthony-becerra/launchcode-attendance' target='_blank'>Fork us on Github! <i class='ion-social-github'></i></a>
                 </div>
+=======
+    <main>
+        <h3>{{ header }}</h3>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="container">
+                © 2017 Copyright
+                <a href='https://github.com/anthony-becerra/launchcode-attendance' target='_blank'>Fork us on Github! <i class='ion-social-github'></i></a>
+>>>>>>> 976167176aa3f2abaae5678c9a6c271b892de567
             </div>
         </div>
     </footer> 
