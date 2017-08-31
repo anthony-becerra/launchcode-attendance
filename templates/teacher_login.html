@@ -1,62 +1,74 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="card large">
-    <div class="card-tabs white-text">
-        <ul class="tabs tabs-fixed-width lc-light-blue">
-            <li class="tab"><a href="#login">Login</a></li>
-            <li class="tab"><a href="#signup">Signup</a></li>
+    <div class="card-tabs text">
+        <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a class="{{ login }}" href="#login">Login</a></li>
+            <li class="tab"><a class="{{ signup }}" href="#signup">Signup</a></li>
         </ul>
     </div>
-    <div class="card-content" id="login">
-        <form class="col s12" action="/login" method="post">
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="email">E-mail</label>
-                    <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
-                    <span class="error">{{ email_err }}</span>
+    <div class="card-content">
+        <div id="login">
+            <form class="col s12" action="/teacher_login" method="post">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="email">E-mail</label>
+                        <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
+                        <span class="error">{{ email_err }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="password">Password</label>
-                    <input class='validate' id="password" name="password" type="password">
-                    <span class="error">{{ password_err }}</span>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="password">Password</label>
+                        <input class='validate' id="password" name="password" type="password">
+                        <span class="error">{{ password_err }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <button class="btn halfway-fab waves-effect waves-light lc-light-blue right" type="submit" name="action">Login</button>
-            </div>
-        </form>
-    </div>
-    <div class="card-content" id="signup">
-        <form class="col s12" action="/signup" method="post">
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="first_name">First Name</label>
-                    <input class='validate' id='first_name' name="first_name" type="text" value='{{ first_name }}'>
-                    <span class="error">{{ first_name_err }}</span>
+                <div class="row">
+                    <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Login</button>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="email">E-mail</label>
-                    <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
-                    <span class="error">{{ email_err }}</span>
+            </form>
+        </div>
+        <div id="signup">
+            <form class="col s12" action="/teacher_signup" method="post">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="firstname">First Name</label>
+                        <input class='validate' id='firstname' name="firstname" type="text" value='{{ firstname }}'>
+                        <span class="error">{{ firstname_err }}</span>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="lastname">Last Name</label>
+                        <input class='validate' id='lastname' name="lastname" type="text" value='{{ lastname }}'>
+                        <span class="error">{{ lastname_err }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="password">Password</label>
-                    <input class='validate' id="password" name="password" type="password">
-                    <span class="error">{{ password_err }}</span>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="email">E-mail</label>
+                        <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
+                        <span class="error">{{ email_err }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div>
-                    <button class="btn waves-effect waves-light lc-light-blue right" type="submit" name="action">Signup</button>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="password">Password</label>
+                        <input class="validate" id="password" name="password" type="password">
+                        <span class="error">{{ password_err }}</span>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="confirm">Confirm Password</label>
+                        <input class="validate" id="confirm" name="confirm" type="password">
+                        <span class="error">{{ confirm_err }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Signup</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
