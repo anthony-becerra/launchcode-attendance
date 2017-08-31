@@ -19,11 +19,17 @@ def index():
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
     if request.method == 'POST':
-        # validate
-        # set session 'username' and redirect to index
         return redirect("/")
     else:
         return render_template("teacher_login.html")
+
+@app.route("/teacher_login", methods=['GET', 'POST'])
+def teacher_signup():
+    if request.method == 'POST':
+        return redirect("/")
+    else:
+        return render_template("teacher_login.html")
+
 
 if __name__ == "__main__":
     app.run()

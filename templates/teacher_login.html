@@ -1,4 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3 class="center">teacher login page</h3>
+<div class="row">
+    <div class="card small">
+        <div class="card-content" id="login">
+            <form class="col s20 m10" action="/login" method="post">
+                <div class="row">
+                    <div class="input-field center">
+                        <label for="email">E-mail</label>
+                        <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
+                        <span class="error">{{ email_err }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field center">
+                        <label for="password">Password</label>
+                        <input class='validate' id="password" name="password" type="password">
+                        <span class="error">{{ password_err }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>Don't have an account? <a href="/signup">Signup</a>!</p>
+                    <button class="btn halfway-fab waves-effect waves-light lc-light-blue right" type="submit" name="action">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
