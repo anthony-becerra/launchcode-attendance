@@ -20,7 +20,7 @@ def teacher_login():
 
 @app.route("/student_login", methods=['GET', 'POST'])
 def student_login():
-    students = [ Student( "John", "Doe"), Student("Mike", "Smith") ]
+    students = [ Student( "John", "Doe"), Student("Mike", "Smith"), Student("Jane", "Doe"), Student("Maggie", "Smith") ]
     session['email'] = "blah@gmail.com"
     return render_template("student_login.html", title="Student Login", students=students)
 

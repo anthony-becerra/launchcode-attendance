@@ -12,7 +12,7 @@
                     <select id="options">
                         <option value="" disabled selected>Select your name</option>
                         {% for student in students %}
-                        <option value="{{student.id}}">{{ student.last_name}}, {{ student.first_name }}</option>
+                        <option value="{{student.first_name}}">{{ student.last_name}}, {{ student.first_name }}</option>
                         {% endfor %}
                     </select>
                     <label for="options">Students</label>
