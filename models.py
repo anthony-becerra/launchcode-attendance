@@ -1,6 +1,7 @@
 from app import db
 from flask_sqlalchemy import SQLAlchemy  
 from datetime import datetime, date
+from hash_tools import make_hash, check_hash
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,7 +30,7 @@ class Teacher(db.Model):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.password = password
+        self.password = make_hash(password)
 
 
 class Attendance(db.Model):
