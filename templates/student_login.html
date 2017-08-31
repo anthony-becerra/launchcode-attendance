@@ -1,66 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card large">
+<div class="card small">
     <div class="card-content">
-            <form class="col s12" action="/teacher_login" method="post">
+        {% if students|length == 0 %}
+        <span class="card-title" >No Students Yet, <a href="/students">Add some students</a>!</span>
+        {% else %}
+        <span class="card-title" >Students Login</span>
+        <form action="/student_login" method="post">
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="options">
+                        <option value="" disabled selected>Select your name</option>
+                        {% for student in students %}
+                        <option value="{{student.id}}">{{ student.last_name}}, {{ student.first_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="options">Students</label>
+                </div>
+                <div class="row"></div>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <label for="email">E-mail</label>
-                        <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
-                        <span class="error">{{ email_err }}</span>
+                    <div class="input-field col s6 center">
+                        <label for="pin">Pin</label>
+                        <input class="validate" id="pin" name="pin" type="password">
+                        <span class="error">{{ pin_err }}</span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="password">Password</label>
-                        <input class='validate' id="password" name="password" type="password">
-                        <span class="error">{{ password_err }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Login</button>
-                </div>
-            </form>
-        <div id="signup">
-            <form class="col s12" action="/teacher_signup" method="post">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <label for="firstname">First Name</label>
-                        <input class='validate' id='firstname' name="firstname" type="text" value='{{ firstname }}'>
-                        <span class="error">{{ firstname_err }}</span>
-                    </div>
-                    <div class="input-field col s6">
-                        <label for="lastname">Last Name</label>
-                        <input class='validate' id='lastname' name="lastname" type="text" value='{{ lastname }}'>
-                        <span class="error">{{ lastname_err }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="email">E-mail</label>
-                        <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
-                        <span class="error">{{ email_err }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="password">Password</label>
-                        <input class="validate" id="password" name="password" type="password">
-                        <span class="error">{{ password_err }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="confirm">Confirm Password</label>
-                        <input class="validate" id="confirm" name="confirm" type="password">
-                        <span class="error">{{ confirm_err }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Signup</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
