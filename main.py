@@ -96,10 +96,6 @@ def teacher_signup():
         session['email'] = username
 
 
-@app.route("/start_day", methods=["POST"])
-def start_day():
-    pass
-
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
 
@@ -143,7 +139,6 @@ def start_day():
 
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
-<<<<<<< HEAD
 
     students = Student.query.order_by(Student.last_name).all()
 
@@ -166,18 +161,6 @@ def student_login():
         return render_template('student_login.html', title = 'Student Login', 
             students = students)
 
-=======
-    if request.method == "POST":
-        pass
-    else:
-        stu1 = Student( "John", "Doe")
-        stu2 = Student("Mike", "Smith")
-        stu3 = Student("Jane", "Doe")
-        stu4 = Student("Maggie", "Smith")
-        students = [ stu1, stu2, stu3, stu4 ]
-        session['email'] = "blah@gmail.com"
-        return render_template("student_login.html", title="Student Login", students=students)
->>>>>>> 742c28709087e813ddf3d41c89d1bbbf8460843c
 
 if __name__ == "__main__":
     app.run()
