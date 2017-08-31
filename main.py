@@ -1,9 +1,6 @@
 from app import app, db
 from flask import request, redirect, render_template, session, flash 
 from models import Student, Teacher, Attendance
-from datetime import datetime, date 
-# from sqlalchemy import desc
-# from sqlalchemy.sql import func 
 
 # @app.before_request
 # def require_login():

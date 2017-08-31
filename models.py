@@ -12,17 +12,17 @@ class Student(db.Model):
     attendance_date = db.relationship("Attendance", backref="owner")
     
 
+<<<<<<< HEAD
     def __init__(self, first_name, last_name, pin=0000, cohort=1,city="Miami"):
+=======
+    def __init__(self, first_name, last_name, pin=0000, cohort=1, city="Miami"):
+>>>>>>> a191cc6c6209c8fb615bfcaefc6a2e23eb11753f
         self.first_name = first_name
         self.last_name = last_name
         self.pin = pin
         self.cohort = cohort
         self.city = city
-        
-        
-        # if pub_date == None:
-        #     pub_date = datetime.now().strftime("%Y-%m-%d %I:%M:%S %p")
-        # self.pub_date = pub_date
+
 
 class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,17 +40,19 @@ class Teacher(db.Model):
 
 class Attendance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date)
-    time = db.Column(db.Time)
+    date_now = db.Column(db.Date)
+    time_now = db.Column(db.Time)
+    present = db.Column(db.Boolean)
     owner_id = db.Column(db.Integer, db.ForeignKey("student.id"))
     
 
-    def __init__(self, owner, date=None, time=None):
-        if date == None:
-            date = date.today()
-        if time == None:
-            time = datetime.time()
-        self.time = time 
-        self.date = date 
+    def __init__(self, owner, date_now=None, time_now=None):
+        if date_now == None:
+            date_now = date.today()
+        if time_now == None:
+            time_now = datetime.time(datetime.now()).strftime("%H:%M:%S")
+        self.time_now = time_now
+        self.date_now = date_now
         self.owner = owner
+        self.present = False
 
