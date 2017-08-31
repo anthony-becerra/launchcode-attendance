@@ -21,22 +21,13 @@ def teacher_login():
     if request.method == 'POST':
         return redirect("/")
     else:
-        return render_template("teacher_login.html")
-
-@app.route("/teacher_login", methods=['GET', 'POST'])
-def teacher_signup():
-    if request.method == 'POST':
-        return redirect("/")
-    else:
-        return render_template("teacher_login.html")
+        session['email']="blah@gmail.com"
+        return render_template("teacher_login.html", title="Login", login="active")
 
 @app.route("/teacher_signup", methods=['POST'])
 def teacher_signup():
     if request.method == 'POST':
-        return render_template("teacher_login.html", title="Signup")
-    else:
-        return render_template("teacher_login.html")
-
+        return render_template("teacher_login.html", title="Signup", signup="active")
 
 if __name__ == "__main__":
     app.run()

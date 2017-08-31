@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel='stylesheet' type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">       
+    <link rel='stylesheet' type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}" media="screen,projection">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -32,6 +33,12 @@
         .indicator{
             background-color: rgba(000,188,212,1) !important;
         }
+        nav .brand-logo{
+            font-size: 1.75rem;
+        }
+        .dropdown-content li>a, .dropdown-content li>span{
+            color: rgba(000,188,212,0.7);
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -39,6 +46,8 @@
             $(".collapsible").collapsible();
             // Initialize collapse button
             $(".button-collapse").sideNav();
+            // Initialize dropdown
+            $(".dropdown-button").dropdown();
         });
     </script>
 </head>
@@ -47,16 +56,22 @@
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper cyan">
-                    <ul class="right">
-                        {% if session['username'] %}
-                        <li>{{ session['username'].title() }}</li>
-                        <li><a href="/students">Students</a></li>
-                        <li><a href="/attendance">Attendance</a></li>
-                        <li><a href="/logout">Logout</a></li>
-                        {% else %}
-                        <li><a href="/teacher_login">Login</a></li>
-                        {% endif %}
+                    <a href="/" class="brand-logo center">LaunchCode Attendance</a>
+                    {% if session['email'] %}
+                    <ul class="left">
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
                     </ul>
+                    <a href="#" data-activates="mobile-demo" class="button"></a>
+                    <ul class="dropdown-content" id="dropdown">
+                        <li><a href="/" class="waves-effect"><i class="material-icons right">home</i>Home</a></li>
+                        <li><a href="/attendance" class="waves-effect"><i class="material-icons right">create</i>New Post</a></li>
+                        <li><a href="/students" class="waves-effect"><i class="material-icons right">create</i>New Post</a></li>
+                    </ul>
+                    <ul class="right">
+                        <li><a class="right waves-effect waves-light waves-light" href="/logout">Logout</a></li>
+                    </ul>
+                    {% else %}
+                    {% endif %}
                 </div>
             </nav>
         </div>
