@@ -20,9 +20,16 @@ def teacher_login():
 
 @app.route("/student_login", methods=['GET', 'POST'])
 def student_login():
-    students = [ Student( "John", "Doe"), Student("Mike", "Smith"), Student("Jane", "Doe"), Student("Maggie", "Smith") ]
-    session['email'] = "blah@gmail.com"
-    return render_template("student_login.html", title="Student Login", students=students)
+    if request.method == "POST":
+        pass
+    else:
+        stu1 = Student( "John", "Doe")
+        stu2 = Student("Mike", "Smith")
+        stu3 = Student("Jane", "Doe")
+        stu4 = Student("Maggie", "Smith")
+        students = [ stu1, stu2, stu3, stu4 ]
+        session['email'] = "blah@gmail.com"
+        return render_template("student_login.html", title="Student Login", students=students)
 
 if __name__ == "__main__":
     app.run()

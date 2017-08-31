@@ -3,23 +3,22 @@
 <div class="card small">
     <div class="card-content">
         {% if students|length == 0 %}
-        <span class="card-title" >No Students Yet, <a href="/students">Add some students</a>!</span>
+        <span class="card-title" >No Students Yet, <a href="/students">Add some Students</a>!</span>
         {% else %}
         <span class="card-title" >Students Login</span>
         <form action="/student_login" method="post">
             <div class="row">
                 <div class="input-field col s12">
-                    <select id="options">
+                    <select name="student_id">
                         <option value="" disabled selected>Select your name</option>
                         {% for student in students %}
-                        <option value="{{student.first_name}}">{{ student.last_name}}, {{ student.first_name }}</option>
+                        <option value="{{ student.first_name }}">{{ student.last_name }}, {{ student.first_name }}</option>
                         {% endfor %}
                     </select>
-                    <label for="options">Students</label>
-                </div>
-                <div class="row"></div>
+                    <label for="student_id">Students</label>
+                </div><br><br>
                 <div class="row">
-                    <div class="input-field col s6 center">
+                    <div class="input-field col s12">
                         <label for="pin">Pin</label>
                         <input class="validate" id="pin" name="pin" type="password">
                         <span class="error">{{ pin_err }}</span>
