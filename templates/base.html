@@ -22,7 +22,27 @@
             main {
             flex: 1 0 auto;
             }
+            .card.large {
+                height: 550px;
+            }
+            .tabs .tab a:hover, .tabs .tab a.active{
+                color: rgba(000,188,212,1) !important;
+            }
+            .tabs .tab a{
+                color: rgba(000,188,212,0.7);
+            }
+            .indicator{
+                background-color: rgba(000,188,212,1) !important;
+            }
     </style>
+    <script>
+        $(document).ready(function(){
+            // Initialize collapsibles
+            $(".collapsible").collapsible();
+            // Initialize collapse button
+            $(".button-collapse").sideNav();
+            });
+    </script>
 </head>
 <body>
     <header>
