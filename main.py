@@ -95,7 +95,6 @@ def teacher_signup():
 
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
-
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -107,9 +106,8 @@ def teacher_login():
         elif teacher and not check_hash(password, teacher.password):
             return render_template('teacher_login.html', title = 'Login', login='active',
                 password_err = 'Wrong password')
-        else:
-            return render_template('teacher_login.html', title = 'Login', login='active', 
-                email_err = 'Wrong username')
+    else:
+        return render_template('teacher_login.html', title = 'Login', login='active')
 
 @app.route('/start_day')
 def start_day():
