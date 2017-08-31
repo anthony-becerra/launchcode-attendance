@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/lc.png') }}" /> -->
     <link rel='stylesheet' type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}" media="screen,projection">
@@ -18,22 +17,21 @@
             min-height: 100vh;
             flex-direction: column;
             }
-        
-            main {
-            flex: 1 0 auto;
-            }
-            .card.large {
-                height: 550px;
-            }
-            .tabs .tab a:hover, .tabs .tab a.active{
-                color: rgba(000,188,212,1) !important;
-            }
-            .tabs .tab a{
-                color: rgba(000,188,212,0.7);
-            }
-            .indicator{
-                background-color: rgba(000,188,212,1) !important;
-            }
+        main {
+        flex: 1 0 auto;
+        }
+        .card.large {
+            height: 550px;
+        }
+        .tabs .tab a:hover, .tabs .tab a.active{
+            color: rgba(000,188,212,1) !important;
+        }
+        .tabs .tab a{
+            color: rgba(000,188,212,0.7);
+        }
+        .indicator{
+            background-color: rgba(000,188,212,1) !important;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -41,7 +39,7 @@
             $(".collapsible").collapsible();
             // Initialize collapse button
             $(".button-collapse").sideNav();
-            });
+        });
     </script>
 </head>
 <body>
