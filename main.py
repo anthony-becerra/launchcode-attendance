@@ -19,6 +19,11 @@ def index():
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
     if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        teacher = Teacher.query.filter_by(email = email).first()
+        
+
         return redirect("/")
     else:
         return render_template("teacher_login.html")
@@ -26,6 +31,9 @@ def teacher_login():
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_signup():
     if request.method == 'POST':
+        
+
+
         return redirect("/")
     else:
         return render_template("teacher_login.html")
