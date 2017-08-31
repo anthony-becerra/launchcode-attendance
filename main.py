@@ -18,7 +18,6 @@ def logout():
   del session['email']
   return redirect('/')
 
-
 # Attendance List
 @app.route('/attendance_list', methods=["POST", "GET"])
 def attendance_list():
@@ -33,7 +32,6 @@ def attendance_list():
 
 #     else:
 #         return render_template('teacher_login.html', title = 'Signup', signup='active')
-
 
 @app.route("/teacher_signup", methods=['POST'])
 def teacher_signup():
@@ -95,7 +93,6 @@ def teacher_signup():
         db.session.commit()
         session['email'] = username
 
-
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
 
@@ -113,7 +110,6 @@ def teacher_login():
         else:
             return render_template('teacher_login.html', title = 'Login', login='active', 
                 email_err = 'Wrong username')
-
 
 @app.route('/start_day')
 def start_day():
@@ -134,12 +130,8 @@ def start_day():
         # the day's list already created
         return redirect ('/')
 
-    
-
-
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
-
     students = Student.query.order_by(Student.last_name).all()
 
     if request.method == 'POST':
@@ -160,7 +152,6 @@ def student_login():
     else:
         return render_template('student_login.html', title = 'Student Login', 
             students = students)
-
 
 if __name__ == "__main__":
     app.run()

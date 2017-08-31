@@ -2,9 +2,9 @@
 {% block content %}
 <div class="container" id="card">
 <div class="row center">
-    <form class="col" action="/start_day" method="post">
+    <form class="col" action="/start_day" method="get">
         <div class="row center">
-            <button class="btn waves-effect waves-light cyan" type="submit" name="action">Start Day</button>
+            <button class="btn waves-effect waves-light cyan" type="submit" name="action"><a href="/start_day">Start Day</a></button>
             <span class="error">{{ day_err }}</span>
         </div>
     </form>
