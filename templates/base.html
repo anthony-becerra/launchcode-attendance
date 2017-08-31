@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/lc.png') }}" />
-    <link rel='stylesheet' type='text/css' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>       
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/material-icons.css') }}" media="screen,projection">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/materialize.css') }}" media="screen,projection">
+    <!-- <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/lc.png') }}" /> -->
+    <link rel='stylesheet' type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">       
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}" media="screen,projection">
-    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static',filename='js/materialize.min.js') }}"></script>
-    <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/plugins.js') }}"></script>
     <title>LaunchCode Attendance</title>
 </head>
 <body>
@@ -19,7 +18,6 @@
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper cyan">
-
                     <ul class="right">
                         {% if session['username'] %}
                         <li>{{ session['username'].title() }}</li>
@@ -34,7 +32,7 @@
             </nav>
         </div>
     </header>
-    <main>
+    <main class="container">
         {% block content %}
         {% endblock %}
     </main>
