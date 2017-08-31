@@ -3,9 +3,6 @@
 <div class="container" id="student">
 <div class="card small hoverable m6" id="student-card">
     <div class="card-content">
-        {% if students|length == 0 %}
-        <span class="card-title" >No Students Yet, <a href="/students">Add some Students</a>!</span>
-        {% else %}
         <span class="card-title" >Students Login</span>
         <form action="/student_login" method="post">
             <div class="row">
@@ -32,7 +29,6 @@
                 <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Sign-In</button>
             </div>
         </form>
-        {% endif %}
     </div>
 </div>
 </div>
