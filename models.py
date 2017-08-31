@@ -11,7 +11,6 @@ class Student(db.Model):
     cohort = db.Column(db.Integer)
     city = db.Column(db.String(120))
     attendance_date = db.relationship("Attendance", backref="owner")
-    
 
     def __init__(self, first_name, last_name, pin=0000, cohort=1, city="Miami"):
         self.first_name = first_name
@@ -19,7 +18,6 @@ class Student(db.Model):
         self.pin = pin
         self.cohort = cohort
         self.city = city
-
 
 class Teacher(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,33 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card small">
+<div class="container" id="student">
+<div class="card small hoverable m6" id="student-card">
     <div class="card-content">
         {% if students|length == 0 %}
-        <span class="card-title" >No Students Yet, <a href="/students">Add some students</a>!</span>
+        <span class="card-title" >No Students Yet, <a href="/students">Add some Students</a>!</span>
         {% else %}
         <span class="card-title" >Students Login</span>
         <form action="/student_login" method="post">
             <div class="row">
                 <div class="input-field col s12">
-                    <select id="options">
-                        <option value="" disabled selected>Select your name</option>
+                    <label for="students">Students</label>
+                    <select name="student_id" id="students">
+                        <option value="" disabled>Select your name</option>
                         {% for student in students %}
-                        <option value="{{student.id}}">{{ student.last_name}}, {{ student.first_name }}</option>
+                        {% if student_id and student_id == student.id %}
+                        <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% else %}
+                        <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
-                    <label for="options">Students</label>
+                </div><br><br>
+                <div class="input-field col s12">
+                    <label for="pin">Pin</label>
+                    <input class="validate" id="pin" name="pin" type="password">
+                    <span class="error">{{ pin_err }}</span>
                 </div>
-                <div class="row"></div>
-                <div class="row">
-                    <div class="input-field col s6 center">
-                        <label for="pin">Pin</label>
-                        <input class="validate" id="pin" name="pin" type="password">
-                        <span class="error">{{ pin_err }}</span>
-                    </div>
-                </div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Sign-In</button>
             </div>
         </form>
         {% endif %}
     </div>
+</div>
 </div>
 {% endblock %}

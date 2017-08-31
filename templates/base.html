@@ -42,6 +42,18 @@
         .dropdown-content{
             min-width: 165px;
         }
+        #teacher-card{
+            margin: 3rem 0 3rem 0;
+        }
+        #teacher{
+            width: 50%;
+        }
+        #student-card{
+            margin: 6rem 0 6rem 0;
+        }
+        #student{
+            width: 30%;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -71,7 +83,7 @@
                         <li><a href="/students" class="waves-effect waves-light"><i class="material-icons left">people</i>Students</a></li>
                     </ul>
                     <ul class="right">
-                        <li><a class="right waves-effect waves-light waves-light" href="/logout">Logout</a></li>
+                        <li><a class="waves-effect waves-light" href="/logout">Logout</a></li>
                     </ul>
                     {% else %}
                     {% endif %}
@@ -79,7 +91,7 @@
             </nav>
         </div>
     </header>
-    <main class="container">
+    <main>
         {% block content %}
         {% endblock %}
     </main>

@@ -1,4 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3>index page</h3>
+<div class="container" id="card">
+<div class="row center">
+    <form class="col" action="/start_day" method="post">
+        <div class="row center">
+            <button class="btn waves-effect waves-light cyan" type="submit" name="action">Start Day</button>
+            <span class="error">{{ day_err }}</span>
+        </div>
+    </form>
+    <div class="row center">
+        <button class="btn waves-effect waves-light cyan text-white"><a href="/student_login">Student Login</a></button>
+        <span class="error">{{ student_err }}</span>
+    </div>
+</div>
+</div>
 {% endblock %}
