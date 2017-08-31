@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3>index page</h3>
+<div class="card small">
+    <div class="card-content">
+        <form action="/start_day" method="post">
+            <div class="row">
+                <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Start Day</button>
+                <span class="error">{{ day_err }}</span>
+            </div>
+        </form>
+        <div class="row">
+            <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Signup</button>
+        </div>
+    </div>
+</div>
 {% endblock %}

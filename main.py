@@ -13,6 +13,10 @@ from models import Student, Teacher, Attendance
 def index():
     return render_template("index.html")
 
+@app.route("/start_day", methods=["POST"])
+def start_day():
+    pass
+
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
     session['email'] = "blah@gmail.com"
