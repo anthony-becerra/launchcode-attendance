@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container" id="card">
-<div class="row center">
-    <div class="row center">
-        <button class="btn waves-effect waves-light cyan"><a href="/start_day">Start Day</a></button>
-        <span class="error">{{ day_err }}</span>
+<div class="container">
+    <div class="col center" id="index">
+        <div class="row">
+            <button class="btn waves-effect waves-light amber darken-2"><a href="/start_day">Start Day</a></button>
+            <span class="error">{{ day_err }}</span>
+            <br><br><br>
+            <button class="btn waves-effect waves-light amber darken-2"><a href="/student_login">Student Login</a></button>
+            <span class="error">{{ student_err }}</span>
+        </div>
     </div>
-    <div class="row center">
-        <button class="btn waves-effect waves-light cyan text-white"><a href="/student_login">Student Login</a></button>
-        <span class="error">{{ student_err }}</span>
-    </div>
-</div>
 </div>
 {% endblock %}
