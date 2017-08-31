@@ -2,33 +2,41 @@ from app import app, db
 from flask import request, redirect, render_template, session, flash 
 from models import Student, Teacher, Attendance
 from datetime import datetime, date 
-# from sqlalchemy import desc
-# from sqlalchemy.sql import func 
 from app import app, db
 from models import Student, Teacher, Attendance
 from hash_tools import make_hash, check_hash
 import val
 
-# Main View
-@app.route('/')
-def index():
-    return render_template('index.html')
+# # Main View
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
+<<<<<<< HEAD
 session['username'] = username
+=======
 
-# Teacher Signup
-@app.route('/teacher_signup', methods=["POST", "GET"])
-def login():
-    return render_template('/teacher_login.html')
+# # Teacher Login
+# @app.route('/teacher_login', methods=["POST", "GET"])
+# def login():
+#     return render_template('/teacher_login.html')
+
+>>>>>>> a191cc6c6209c8fb615bfcaefc6a2e23eb11753f
+
+# # Teacher Signup
+# @app.route('/teacher_signup', methods=["POST", "GET"])
+# def login():
+#     return render_template('/teacher_login.html')
 
 
-# Logout
-@app.route('/logout')
-def logout():
-  del session['email']
-  return redirect('/')
+# # Logout
+# @app.route('/logout')
+# def logout():
+#   del session['email']
+#   return redirect('/')
 
 
+<<<<<<< HEAD
 # Student Login
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
@@ -50,18 +58,24 @@ def student_login():
     else:
         students = Student.query.order_by(Student.last_name).all()
         return render_template('student_login.html', title = 'Student Login', students = students)
+=======
+# # Student Login
+# @app.route('/student_login', methods=["POST", "GET"])
+# def student_login():
+#     return render_template('student_login.html')
+>>>>>>> a191cc6c6209c8fb615bfcaefc6a2e23eb11753f
 
 
-# Attendance List
-@app.route('/attendance_list', methods=["POST", "GET"])
-def attendance_list():
-    return render_template('attendance_list.html')
+# # Attendance List
+# @app.route('/attendance_list', methods=["POST", "GET"])
+# def attendance_list():
+#     return render_template('attendance_list.html')
 
 
-# Student List
-@app.route('/student_list', methods=["POST", "GET"])
-def student_list():
-    return render_template('student_list.html')
+# # Student List
+# @app.route('/student_list', methods=["POST", "GET"])
+# def student_list():
+#     return render_template('student_list.html')
 
 @app.before_request
 def require_login():
