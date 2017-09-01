@@ -10,6 +10,7 @@ import val
 # Main View
 @app.route('/')
 def index():
+    session['email'] = "lol@gmail.com"
     return render_template('index.html')
 
 # Logout
