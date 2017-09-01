@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if attendance|length == 0 %}
-
 <form method='post'>
     <select name="date_now">
     {% for date in dates %}
