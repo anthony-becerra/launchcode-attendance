@@ -82,6 +82,11 @@
             $(".dropdown-button").dropdown();
             // Initialize options
             $('select').material_select();
+            {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                Materialize.toast('{{ message }}', 4000);
+            {% endfor %}
+            {% endwith %}
         });
         // { flash }
     </script>
