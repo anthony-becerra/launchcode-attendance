@@ -10,11 +10,7 @@
                     <select name="student_id" id="students">
                         <option value="" disabled selected>Select your name</option>
                         {% for student in students %}
-                        {% if student_id and student_id == student.id %}
-                        <option class="login-dropwdown" value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
-                        {% else %}
-                        <option class="login-dropwdown" value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
-                        {% endif %}
+                        <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
                         {% endfor %}
                         <label for="students">Students</label>
                     </select>

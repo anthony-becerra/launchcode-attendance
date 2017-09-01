@@ -151,8 +151,7 @@ def student_login():
             db.session.commit()
         elif student and student.pin != pin:
             return render_template('student_login.html', title ='Student Login', 
-                pin_err = 'Wrong Pin', students = students, 
-                student_id = student_id)
+                pin_err = 'Wrong Pin', students = students)
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
