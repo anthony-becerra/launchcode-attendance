@@ -28,8 +28,6 @@ def attendance_list():
 # @app.route('/student_list', methods=["POST", "GET"])
 # def student_list():
 #     return render_template('student_list.html')
-
-
 #     else:
 #         return render_template('teacher_login.html', title = 'Signup', signup='active')
 
@@ -158,7 +156,6 @@ def student_login():
                 student_id = student_id)
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
-        print(attendance_exists)
 
         # Validate if today's date exists in database
         if attendance_exists is None:
