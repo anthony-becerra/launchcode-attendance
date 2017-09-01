@@ -3,12 +3,12 @@
 <div class="container" id="student">
 <div class="card medium hoverable m6" id="student-card">
     <div class="card-content">
-        <span class="card-title" >Student Login</span>
+        <span class="card-title" >Change Pin</span>
         <form action="/student_login" method="post">
             <div class="row">
                 <div class="input-field col s12">
                     <select name="student_id" id="student">
-                        <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                        <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
                         <label for="student">Students</label>
                     </select>
                 </div><br><br>
@@ -16,9 +16,13 @@
                     <label for="pin">Pin</label>
                     <input class="validate" id="pin" name="pin" type="password">
                 </div>
+                <div class="input-field col s12">
+                    <label for="confirm_pin">Confirm Pin</label>
+                    <input class="validate" id="confirm_pin" name="confirm_pin" type="password">
+                </div>
             </div>
             <div class="row">
-                <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Sign-In</button>
+                <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Change Pin</button>
             </div>
         </form>
     </div>
