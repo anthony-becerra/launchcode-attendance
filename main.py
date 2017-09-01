@@ -136,11 +136,10 @@ def start_day():
             day_err = 'Today\'s attendance already created')
 
 
-# TODO Add validation so if the attendance list hasn't been created, you can't 
-# go to the student Login page.
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
     students = Student.query.order_by(Student.last_name).all()
+
 
     if request.method == 'POST':
         student_id = request.form['student_id'] 
@@ -158,8 +157,15 @@ def student_login():
                 pin_err = 'Wrong Pin', students = students, 
                 student_id = student_id)
     else:
-        return render_template('student_login.html', title = 'Student Login', 
-            students = students)
+        attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
+        print(attendance_exists)
+
+        # Validate if today's date exists in database
+        if attendance_exists is None:
+            return render_template('index.html', title = 'Attendance App',
+                student_err = 'Please create today\'s attendance list first (Press \'START DAY\' button)')
+        
+        return render_template('student_login.html', title = 'Student Login', students = students)
 
 if __name__ == "__main__":
     app.run()
