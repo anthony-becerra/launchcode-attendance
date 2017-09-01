@@ -142,7 +142,7 @@ def student_login():
         pin = request.form['pin']
         student = Student.query.get(student_id)
         student_att = Attendance.query.filter_by(owner_id = student_id,
-                 date_now = date.today())
+                 date_now = date.today()).first()
         
         if not pin:
             flash("Please enter your Pin!")
@@ -150,7 +150,7 @@ def student_login():
         elif not pin.isdigit():
             flash("Your Pin cannot have Letters!")
             return render_template('student_login.html', title ='Student Login', students = students)
-        elif student and int(pin) == 0:
+        elif student and int(student.pin) == 0:
             # Redirect student to change pin if it's the first time the sign in.
             flash("Please change your pin")
             return redirect('/change_pin?id=' + student_id)
@@ -160,9 +160,9 @@ def student_login():
         else:
             # no validation error
             # make student present in attendance table
-            student_att.present = True
+            student_att.present = True     
             db.session.commit()
-            flash("{0} Signed in!".format(student.first_name))
+            flash("{0} Signed in!".format(student.first_name.title()))
             return render_template('student_login.html', title ='Student Login', students = students)
 
     else:
