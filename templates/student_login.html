@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container" id="student">
-<div class="card small hoverable m6" id="student-card">
+<div class="card medium hoverable m6" id="student-card">
     <div class="card-content">
         <span class="card-title" >Student Login</span>
         <form action="/student_login" method="post">
             <div class="row">
                 <div class="input-field col s12">
                     <select name="student_id" id="students">
-                        <option value="" disabled selected>Select your name</option>
+                        <!-- <option value="" disabled selected>Select your name</option> -->
                         {% for student in students %}
                         <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
                         {% endfor %}
                         <label for="students">Students</label>
                     </select>
                     <span class="info">{{ login_success }}</span>
+                    <span class="error">{{ login_err }}</span>
                 </div><br><br>
                 <div class="input-field col s12">
                     <label for="pin">Pin</label>
