@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://localhost:5000/teacher_login -->
+<html lang="en" data-livestyle-extension="available" class="gr__localhost"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="./Login_files/ionicons.min.css">
+    <link rel="stylesheet" href="./Login_files/icon">     
+    <link rel="stylesheet" href="./Login_files/materialize.min.css" media="screen,projection">
+    <link rel="stylesheet" type="text/css" href="./Login_files/style.css" media="screen,projection">
+    <script type="text/javascript" src="./Login_files/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./Login_files/materialize.min.js"></script>
+    <script type="text/javascript" src="./Login_files/plugins.js"></script>
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+            background-image: url('https://www.launchcode.org/assets/cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg');
+            background-position: 0px -140px;
+            background-size: cover;
+        }
+        .card.medium {
+            height: 325px;
+        }
+        .card.large {
+            height: 550px;
+        }
+        .tabs .tab a:hover, .tabs .tab a.active{
+            color: rgba(092,147,206,1) !important;
+        }
+        .tabs .tab a{
+            color: rgba(092,147,206,0.6) !important;
+        }
+        .indicator{
+            background-color: rgba(092,147,206,1) !important;
+        }
+        nav .brand-logo{
+            font-size: 1.75rem;
+        }
+        .dropdown-content li>a, .dropdown-content li>span{
+            color: rgba(050,050,050,1);
+        }
+        .dropdown-content{
+            min-width: 165px;
+        }
+        #teacher-card{
+            margin: 3rem 0 3rem 0;
+            height: 325px;
+        }
+        #teacher{
+            width: 50%;
+        }
+        #student-card{
+            margin: 6rem 0 6rem 0;
+        }
+        #student{
+            width: 30%;
+        }
+        #index{
+            margin: 12rem 0 12rem 0;
+        }
+        #index-btn{
+            min-width: 200px;
+            min-height: 60px;
+            margin: 10px;
+            padding: 1rem;
+            vertical-align: center;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
+        .lc-blue{
+            background-color: #344A5F !important;
+        }
+        .lc-light-blue{
+            background-color: #5C93CE !important;
+        }
+        .lc-orange{
+            background-color: #F0400F !important;
+        }
+        .lc-light-orange{
+            background-color: #F47753 !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            // Initialize collapsibles
+            $(".collapsible").collapsible();
+            // Initialize collapse button
+            $(".button-collapse").sideNav();
+            // Initialize dropdown
+            $(".dropdown-button").dropdown();
+            // Initialize options
+            $('select').material_select();
+            
+            
+            
+        });
+        // { flash }
+    </script>
+</head>
+<body data-gr-c-s-loaded="true" cz-shortcut-listen="true" style=""><div id="StayFocusd-infobar" style="display:none;">
+    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
+    <span id="StayFocusd-infobar-msg"></span>
+    <span id="StayFocusd-infobar-links">
+        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a id="StayFocusd-infobar-hide">hide once</a>
+    </span>
+</div>
+    <header>
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper lc-blue">
+                    <a href="http://localhost:5000/" class="brand-logo center">LaunchCode Attendance</a>
+                    
+                    <ul class="left">
+                    <li><a class="dropdown-button" href="http://localhost:5000/teacher_login#!" data-activates="dropdown"><i class="material-icons">menu</i></a><ul class="dropdown-content lc-light-orange" id="dropdown">
+                        <li><a class="nav-dropwdown" href="http://localhost:5000/"><i class="material-icons left">home</i>Home</a></li>
+                        <li><a class="nav-dropwdown" href="http://localhost:5000/attendance"><i class="material-icons left">perm_contact_calendar</i>Attendance</a></li>
+                        <li><a class="nav-dropwdown" href="http://localhost:5000/students"><i class="material-icons left">people</i>Students</a></li>
+                    </ul></li>
+                    </ul>
+                    <a href="http://localhost:5000/teacher_login#" data-activates="mobile-demo" class="button"></a>
+                    
+                    <ul class="right">
+                        <li><a class="waves-effect waves-light" href="http://localhost:5000/logout">Logout</a></li>
+                    </ul>
+                    
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        
+<div class="container" id="teacher">
+<div class="card large hoverable m6" id="teacher-card">
+    <div class="card-tabs text">
+        <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a class="active" href="http://localhost:5000/teacher_login#login">Login</a></li>
+            <li class="tab"><a class="" href="http://localhost:5000/teacher_login#signup">Signup</a></li>
+        <li class="indicator" style="right: 365px; left: 0px;"></li></ul>
+    </div>
+    <div class="card-content">
+        <div id="login" class="active" style="">
+            <form class="col s12" action="http://localhost:5000/teacher_login" method="post">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="email">E-mail</label>
+                        <input class="validate" id="email" name="email" type="text" value="" autocomplete="off" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="password">Password</label>
+                        <input class="validate" id="password" name="password" type="password" autocomplete="off" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light lc-orange right" type="submit" name="action">Login</button>
+                </div>
+            </form>
+        </div>
+        <div id="signup" class="" style="display: none;">
+            <form class="col s12" action="http://localhost:5000/teacher_signup" method="post">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="firstname">First Name</label>
+                        <input class="validate" id="firstname" name="firstname" type="text" value="">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="lastname">Last Name</label>
+                        <input class="validate" id="lastname" name="lastname" type="text" value="">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="email">E-mail</label>
+                        <input class="validate" id="email" name="email" type="text" value="">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="password">Password</label>
+                        <input class="validate" id="password" name="password" type="password">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="confirm">Confirm Password</label>
+                        <input class="validate" id="confirm" name="confirm" type="password">
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light lc-orange right" type="submit" name="action">Signup</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+    </main>
+    <footer class="page-footer lc-blue">
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2017 Copyright
+                    <a class="white-text right" href="https://github.com/anthony-becerra/launchcode-attendance" target="_blank">Fork us on Github! <i class="ion-social-github"></i></a>
+                </div>
+            </div>
+        
+    </footer> 
+
+<div class="hiddendiv common"></div></body></html>

@@ -1,28 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if attendance|length == 0 %}
-<form method='post'>
-    <select name="date_now">
-    {% for date in dates %}
-      <option value="{{date.date_now}}">{{date.date_now}}</option>
-    {% endfor %}
-    </select>
-    <br><br>
-    <input type="submit">
-  </form>
-{% else %}
-    <ul>
-        {% for att in attendance %}
-        <hr>
-        <li>
-          <!-- <input type="hidden" name="att.date_now" value={{att.date_now}} /> -->
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.date_now }}</a> </span> </h2> 
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.first_name }} </span> </h2>      
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.last_name }} </span> </h2>                    
-        
-        </li>
-        <hr>
-        {% endfor %}
-    </ul>
-{% endif %}
+<div class="container">
+    {% if attendance|length == 0 %}
+    <div class="card small hoverable m6">
+        <div class="card-content">
+            <span class="card-title" >Attendance Dates</span>
+            <form action="/attendance" method="post">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select name="date_now" id="date_now">
+                            {% for student in students %}
+                              <option value="{{ date.date_now }}">{{date.date_now}}</option>
+                            {% endfor %}
+                            <label for="date_now">Dates</label>
+                        </select>
+                    </div><br><br>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light lc-light-blue right" type="submit" name="action">Select Date</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  {% else %}
+      <ul>
+          {% for att in attendance %}
+          <hr>
+          <li>
+            <!-- <input type="hidden" name="att.date_now" value={{att.date_now}} /> -->
+            <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.date_now }}</a> </span> </h2> 
+            <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.first_name }} </span> </h2>      
+            <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.last_name }} </span> </h2>                    
+          
+          </li>
+          <hr>
+          {% endfor %}
+      </ul>
+  {% endif %}
+</div>
 {% endblock %}
