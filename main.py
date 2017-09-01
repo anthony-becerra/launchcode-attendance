@@ -24,13 +24,13 @@ def logout():
 def attendance_list():
     return render_template('attendance_list.html')
 
-# TODO
-# Student List
-# @app.route('/student_list', methods=["POST", "GET"])
-# def student_list():
-#     return render_template('student_list.html')
-#     else:
-#         return render_template('teacher_login.html', title = 'Signup', signup='active')
+#TODO
+@app.route('/students', methods=["POST", "GET"])
+def students():
+    students = Student.query.all()
+    return render_template('students.html', students=students)
+    # else:
+    #     return render_template('teacher_login.html', title = 'Signup', signup='active')
 
 @app.route("/teacher_signup", methods=['POST'])
 def teacher_signup():
