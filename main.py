@@ -140,7 +140,7 @@ def student_login():
 
     if request.method == 'POST':
         student_id = request.form['student_id'] 
-        pin = request.form['pin']
+        pin = int(request.form['pin'])
         student = Student.query.get(student_id)
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today())
@@ -149,9 +149,10 @@ def student_login():
             # make student present in attendance table
             student_att.present = True
             db.session.commit()
+            return render_template('student_login.html', title ='Student Login', students = students)
         elif student and student.pin != pin:
             return render_template('student_login.html', title ='Student Login', 
-                pin_err = 'Wrong Pin', students = students)
+                pin_err = "Wrong Pin!", students = students)
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
