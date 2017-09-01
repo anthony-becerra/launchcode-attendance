@@ -1,15 +1,5 @@
-<<<<<<< HEAD
 {% extends 'base.html' %}
 {% block content %}
-<h2>#make a drop down for dates that have been activated.(export to google sheets?)</h2>
-{% endblock %}
-=======
-<!DOCTYPE html>
-
-
-{% block content %}
-
-
 {% if attendance|length == 0 %}
 
 <form method='post'>
@@ -21,7 +11,6 @@
     <br><br>
     <input type="submit">
   </form>
-
 {% else %}
     <ul>
         {% for att in attendance %}
@@ -36,8 +25,5 @@
         <hr>
         {% endfor %}
     </ul>
-
 {% endif %}
-
 {% endblock %}
->>>>>>> 2cc648414118b5339e71ee7a8f33564a4abc2a9c
