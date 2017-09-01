@@ -145,11 +145,7 @@ def student_login():
         student = Student.query.get(student_id)
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today())
-
-        if student_id == "":
-            return render_template('student_login.html', title ='Student Login', 
-                login_err = "Please select your Name!", students = students)
-        elif not pin:
+        if not pin:
             return render_template('student_login.html', title ='Student Login', 
                 pin_err = "Please enter your Pin!", students = students)
         elif not pin.isdigit():
