@@ -143,17 +143,21 @@ def student_login():
         student = Student.query.get(student_id)
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today())
-
+        
         if not pin:
             flash("Please enter your Pin!")
             return render_template('student_login.html', title ='Student Login', students = students)
         elif not pin.isdigit():
             flash("Your Pin cannot have Letters!")
             return render_template('student_login.html', title ='Student Login', students = students)
+        elif student and int(pin) == 0:
+            # Redirect student to change pin if it's the first time the sign in.
+            return redirect('/change_pin?id=' + student_id)
         elif student and student.pin != int(pin):
             flash("Wrong Pin!")
             return render_template('student_login.html', title ='Student Login', students = students)
         else:
+            # no validation error
             # make student present in attendance table
             student_att.present = True
             db.session.commit()
@@ -169,6 +173,43 @@ def student_login():
             return render_template('index.html', title = 'Attendance App')
         
         return render_template('student_login.html', title = 'Student Login', students = students)
+
+# Allows students to change their pin the very first time
+# (first time an attendance list is created) the sign in.
+@app.route('/change_pin', methods = ['GET', 'POST'])
+def change_pin():
+
+    if request.method == 'GET':
+        student_id = request.args.get('id')
+        student = Student.query.get(student_id)
+        # return render_template('change_pin.html', name = name, student = student)
+        return render_template('change_pin.html',student = student,
+            title = 'Change Pin')
+    else:
+        student_id = request.form['student_id']
+        student = Student.query.get(student_id)
+        pin = request.form['pin']
+        confirm_pin = request.form['confirm_pin']
+
+        # Validation
+        if val.is_empty(pin) or val.is_empty(confirm_pin):
+            flash('Please enter a pin')
+            return render_template('change_pin.html',student = student,
+            title = 'Change Pin')
+        elif pin != confirm_pin:
+            flash('Pins must match')
+            return render_template('change_pin.html',student = student,
+            title = 'Change Pin')
+        elif len(pin) != 4 or not pin.isdigit():
+            flash('Pin must be 4 digits long and can only contain integers')
+            return render_template('change_pin.html',student = student,
+            title = 'Change Pin')
+        
+        # change pin in the user table
+        student.pin = pin
+        db.session.commit()
+        flash(student.first_name.title() + ' Logged in!')
+        return redirect('/student_login')
 
 @app.route("/attendance", methods=['GET', 'POST'])
 def attendance():
