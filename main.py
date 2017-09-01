@@ -23,7 +23,7 @@ def logout():
 def attendance_list():
     return render_template('attendance_list.html')
 
-
+# TODO
 # Student List
 # @app.route('/student_list', methods=["POST", "GET"])
 # def student_list():
@@ -125,11 +125,19 @@ def start_day():
                 record = Attendance(student)
                 db.session.add(record)
             db.session.commit()
-        return redirect('/student_login')
+            return redirect('/student_login')
+        else:
+             # the day's list has not been created
+            return render_template('student_login.html', title = 'Student Login',
+                day_err = 'Today\'s attendance has\'s been created yet.')
     else:
         # the day's list already created
-        return redirect ('/')
+        return render_template('index.html', title = 'Attendance App',
+            day_err = 'Today\'s attendance already created')
 
+
+# TODO Add validation so if the attendance list hasn't been created, you can't 
+# go to the student Login page.
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
     students = Student.query.order_by(Student.last_name).all()
