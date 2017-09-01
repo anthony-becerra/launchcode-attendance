@@ -22,6 +22,7 @@
             flex: 1 0 auto;
             background-image: url('https://www.launchcode.org/assets/cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg');
             background-position: 0px -140px;
+            background-repeat: no-repeat;
             background-size: cover;
         }
         .tabs .tab a:hover, .tabs .tab a.active{
@@ -36,11 +37,17 @@
         nav .brand-logo{
             font-size: 1.75rem;
         }
-        .dropdown-content li>a, .dropdown-content li>span{
+        .dropdown-content li>span{
             color: rgba(050,050,050,1);
+        }
+        .dropdown-content li>a{
+            color: rgba(255,255,255,.9);
         }
         .dropdown-content{
             min-width: 165px;
+        }
+        .page-footer .footer-copyright{
+            background-color: rgba(51,51,51,0.1) !important;
         }
         #teacher-card{
             margin: 3rem -1.5rem 3rem -1.5rem;
@@ -50,18 +57,22 @@
             width: 50%;
         }
         #student-card{
-            margin: 8rem -4rem 8rem -4rem;
+            margin: 8rem 0 8rem 0;
             height: 325px;
         }
         #student{
             width: 30%;
         }
         #change-card{
-            margin: 6rem -3rem 6rem -3rem;
+            margin: 6rem 0 6rem 0;
             height: 425px;
         }
         #change{
             width: 30%;
+        }
+        #att-date-card{
+            margin: 6rem 0 6rem 0;
+            height: 425px;
         }
         #index{
             margin: 12rem 0 12rem 0;
@@ -137,13 +148,35 @@
         {% endblock %}
     </main>
     <footer class="page-footer lc-blue">
-            <div class="footer-copyright">
-                <div class="container">
-                    © 2017 Copyright
-                    <a class="white-text right" href='https://github.com/anthony-becerra/launchcode-attendance' target='_blank'>Fork us on Github! <i class='ion-social-github'></i></a>
+        <div class="container">
+            <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">LaunchCode Attendance</h5>
+                <p class="grey-text text-lighten-4">Tracks Attendance for LC101 Cohorts.</p>
+            </div>
+            <div class="col l4 offset-l1 s12">
+                <h5 class="white-text">Contributors</h5>
+                <!-- <div class="col"> -->
+                    <div class="row">
+                        <a class="chip lc-light-blue-text" href="https://github.com/anthony-becerra" target='_blank'><img src="https://avatars2.githubusercontent.com/u/27900121?v=4&s=400" alt="Anthony Img">Anthony</a>
+                        <a class="chip lc-light-blue-text" href="https://github.com/dannyneira" target='_blank'><img src="https://avatars2.githubusercontent.com/u/16809145?v=4&s=460" alt="Danny Img">Danny</a>
+                    <!-- </div> -->
+                <!-- </div> -->
+                <!-- <div class="col"> -->
+                    <!-- <div class="row"> -->
+                        <a class="chip lc-light-blue-text" href="https://github.com/kitiarasr" target='_blank'><img src="https://avatars3.githubusercontent.com/u/14181911?v=4&s=400" alt="Kitiara Img">Kitiara</a>
+                        <a class="chip lc-light-blue-text" href="https://github.com/jonager" target='_blank'><img src="https://avatars0.githubusercontent.com/u/17533132?v=4&s=400" alt="Jonathan Img">Jonathan</a>
+                    <!-- </div> -->
                 </div>
             </div>
+            </div>
         </div>
-    </footer> 
+        <div class="footer-copyright">
+            <div class="container">
+            © 2017 Copyright
+            <a class="grey-text text-lighten-3 right" href='https://github.com/anthony-becerra/launchcode-attendance' target='_blank'>Fork us on Github! <i class='ion-social-github'></i></a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
