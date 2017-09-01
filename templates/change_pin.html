@@ -3,8 +3,8 @@
 <div class="container" id="student">
 <div class="card medium hoverable m6" id="student-card">
     <div class="card-content">
-        <span class="card-title" >Student Login</span>
-        <form action="/student_login" method="post">
+        <span class="card-title" >Change Pin for:</span>
+        <form action="/change_pin" method="post">
             <div class="row">
                 <div class="input-field col s12">
                     <select name="student_id" id="student">
@@ -16,9 +16,13 @@
                     <label for="pin">Pin</label>
                     <input class="validate" id="pin" name="pin" type="password">
                 </div>
+                <div class="input-field col s12">
+                    <label for="confirm_pin">Confirm Pin</label>
+                    <input class="validate" id="confirm_pin" name="confirm_pin" type="password">
+                </div>
             </div>
             <div class="row">
-                <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Sign-In</button>
+                <button class="btn waves-effect waves-light cyan right" type="submit" name="action">Change Pin</button>
             </div>
         </form>
     </div>
