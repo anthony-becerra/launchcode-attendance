@@ -140,8 +140,8 @@ def student_login():
 
     if request.method == 'POST':
         student_id = request.form['student_id']
-        print(student_id)
         pin = request.form['pin']
+        confirm_pin = request.form['confirm_pin']
         student = Student.query.get(student_id)
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today())
