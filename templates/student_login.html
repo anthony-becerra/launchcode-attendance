@@ -7,9 +7,8 @@
         <form action="/student_login" method="post">
             <div class="row">
                 <div class="input-field col s12">
-                    <label for="students">Students</label>
                     <select name="student_id" id="students">
-                        <option value="lol">Select your name</option>
+                        <option value="" disabled>Select your name</option>
                         {% for student in students %}
                         {% if student_id and student_id == student.id %}
                         <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
@@ -17,6 +16,7 @@
                         <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
                         {% endif %}
                         {% endfor %}
+                        <label for="students">Students</label>
                     </select>
                 </div><br><br>
                 <div class="input-field col s12">
