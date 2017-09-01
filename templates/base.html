@@ -17,15 +17,12 @@
             display: flex;
             min-height: 100vh;
             flex-direction: column;
-            }
+        }
         main {
-        flex: 1 0 auto;
-        }
-        .info{
-            color: green;
-        }
-        .error{
-            color: red;
+            flex: 1 0 auto;
+            background-image: url('https://www.launchcode.org/assets/cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg');
+            background-position: 0px -140px;
+            background-size: cover;
         }
         .card.medium {
             height: 325px;
@@ -34,13 +31,13 @@
             height: 550px;
         }
         .tabs .tab a:hover, .tabs .tab a.active{
-            color: rgba(000,188,212,1) !important;
+            color: rgba(092,147,206,1) !important;
         }
         .tabs .tab a{
-            color: rgba(000,188,212,0.7);
+            color: rgba(092,147,206,0.7) !important;
         }
         .indicator{
-            background-color: rgba(000,188,212,1) !important;
+            background-color: rgba(092,147,206,1) !important;
         }
         nav .brand-logo{
             font-size: 1.75rem;
@@ -67,9 +64,25 @@
             margin: 12rem 0 12rem 0;
         }
         #index-btn{
-            min-width: 175px;
-            min-height: 75px;
+            min-width: 200px;
+            min-height: 60px;
+            margin: 10px;
+            padding: 1rem;
             vertical-align: center;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
+        .lc-blue{
+            background-color: #344A5F !important;
+        }
+        .lc-light-blue{
+            background-color: #5C93CE !important;
+        }
+        .lc-orange{
+            background-color: #F0400F !important;
+        }
+        .lc-light-orange{
+            background-color: #F47753 !important;
         }
     </style>
     <script>
@@ -95,14 +108,14 @@
     <header>
         <div class="navbar-fixed">
             <nav>
-                <div class="nav-wrapper cyan">
+                <div class="nav-wrapper lc-blue">
                     <a href="/" class="brand-logo center">LaunchCode Attendance</a>
                     {% if session['email'] %}
                     <ul class="left">
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
                     </ul>
                     <a href="#" data-activates="mobile-demo" class="button"></a>
-                    <ul class="dropdown-content amber darken-2" id="dropdown">
+                    <ul class="dropdown-content lc-light-orange" id="dropdown">
                         <li><a class="nav-dropwdown" href="/" class="waves-effect waves-light"><i class="material-icons left">home</i>Home</a></li>
                         <li><a class="nav-dropwdown" href="/attendance" class="waves-effect waves-light"><i class="material-icons left">perm_contact_calendar</i>Attendance</a></li>
                         <li><a class="nav-dropwdown" href="/students" class="waves-effect waves-light"><i class="material-icons left">people</i>Students</a></li>
@@ -120,7 +133,7 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="page-footer cyan">
+    <footer class="page-footer lc-blue">
             <div class="footer-copyright">
                 <div class="container">
                     © 2017 Copyright
