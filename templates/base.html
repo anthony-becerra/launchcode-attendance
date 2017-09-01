@@ -21,6 +21,10 @@
         main {
         flex: 1 0 auto;
         }
+        .error{
+            color: red;
+            font-size: 1rem;
+        }
         .card.large {
             height: 550px;
         }
@@ -57,6 +61,11 @@
         #index{
             margin: 12rem 0 12rem 0;
         }
+        #index-btn{
+            min-width: 175px;
+            min-height: 75px;
+            vertical-align: center;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -66,6 +75,8 @@
             $(".button-collapse").sideNav();
             // Initialize dropdown
             $(".dropdown-button").dropdown();
+            // Initialize options
+            $('select').material_select();
         });
     </script>
 </head>
@@ -94,7 +105,7 @@
             </nav>
         </div>
     </header>
-    <main class="container">
+    <main>
         {% block content %}
         {% endblock %}
     </main>
