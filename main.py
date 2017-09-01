@@ -119,13 +119,13 @@ def start_day():
         # a list for today's date.
             for student in students:
                 record = Attendance(student)
-                db.session.add(record)
+                db.session.add(record) 
             db.session.commit()
             return redirect('/student_login')
         else:
              # the day's list has not been created
-            flash('Today\'s attendance has\'s been created yet.')
-            return render_template('student_login.html', title = 'Student Login')
+            flash('Today\'s attendance hasn\'t been created yet.')
+            return render_template('index.html', title = 'Student Login')
     else:
         # the day's list already created
         flash('Today\'s attendance already created')
@@ -150,7 +150,7 @@ def student_login():
         elif not pin.isdigit():
             flash("Your Pin cannot have Letters!")
             return render_template('student_login.html', title ='Student Login', students = students)
-        elif student and int(student.pin) == 0:
+        elif student and student.pin == 0 and student.pin == int(pin):
             # Redirect student to change pin if it's the first time the sign in.
             flash("Please change your pin")
             return redirect('/change_pin?id=' + student_id)
@@ -164,7 +164,6 @@ def student_login():
             db.session.commit()
             flash("{0} Signed in!".format(student.first_name.title()))
             return render_template('student_login.html', title ='Student Login', students = students)
-
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
@@ -189,6 +188,8 @@ def change_pin():
     else:
         student_id = request.form['student_id']
         student = Student.query.get(student_id)
+        student_att = Attendance.query.filter_by(owner_id = student_id,
+            date_now = date.today()).first()
         pin = request.form['pin']
         confirm_pin = request.form['confirm_pin']
 
@@ -205,9 +206,15 @@ def change_pin():
             flash('Pin must be 4 digits long and can only contain integers')
             return render_template('change_pin.html',student = student,
             title = 'Change Pin')
-        
+        elif int(pin) == 0:
+            flash('Your pin can\'t be 0')
+            return render_template('change_pin.html',student = student,
+            title = 'Change Pin')
+
         # change pin in the user table
         student.pin = pin
+        # sign in students for the day, attendance table
+        student_att.present = True     
         db.session.commit()
         flash(student.first_name.title() + ' Logged in!')
         return redirect('/student_login')
@@ -221,7 +228,6 @@ def attendance():
     else:
         dates = Attendance.query.filter_by().all()
         return render_template("attendance.html", dates=dates)
-
 
 
 if __name__ == "__main__":
