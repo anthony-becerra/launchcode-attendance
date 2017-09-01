@@ -24,7 +24,7 @@ def logout():
 def attendance_list():
     return render_template('attendance_list.html')
 
-
+# TODO
 # Student List
 # @app.route('/student_list', methods=["POST", "GET"])
 # def student_list():
@@ -124,14 +124,21 @@ def start_day():
                 record = Attendance(student)
                 db.session.add(record)
             db.session.commit()
-        return redirect('/student_login')
+            return redirect('/student_login')
+        else:
+             # the day's list has not been created
+            return render_template('student_login.html', title = 'Student Login',
+                day_err = 'Today\'s attendance has\'s been created yet.')
     else:
         # the day's list already created
-        return redirect ('/')
+        return render_template('index.html', title = 'Attendance App',
+            day_err = 'Today\'s attendance already created')
+
 
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
     students = Student.query.order_by(Student.last_name).all()
+
 
     if request.method == 'POST':
         student_id = request.form['student_id'] 
@@ -149,8 +156,15 @@ def student_login():
                 pin_err = 'Wrong Pin', students = students, 
                 student_id = student_id)
     else:
-        return render_template('student_login.html', title = 'Student Login', 
-            students = students)
+        attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
+        print(attendance_exists)
+
+        # Validate if today's date exists in database
+        if attendance_exists is None:
+            return render_template('index.html', title = 'Attendance App',
+                student_err = 'Please create today\'s attendance list first (Press \'START DAY\' button)')
+        
+        return render_template('student_login.html', title = 'Student Login', students = students)
 
 if __name__ == "__main__":
     app.run()
