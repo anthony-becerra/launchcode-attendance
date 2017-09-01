@@ -31,5 +31,17 @@ def student_login():
         session['email'] = "blah@gmail.com"
         return render_template("student_login.html", title="Student Login", students=students)
 
+@app.route("/attendance", methods=['GET', 'POST'])
+def attendance():
+    if request.method == 'POST':
+        date_now = request.form['date_now']
+        attendance = Attendance.query.filter_by(date_now=date_now).all()
+        return render_template("attendance.html", attendance=attendance)
+    else:
+        dates = Attendance.query.filter_by().all()
+        return render_template("attendance.html", dates=dates)
+
+
+
 if __name__ == "__main__":
     app.run()
