@@ -152,6 +152,7 @@ def student_login():
             return render_template('student_login.html', title ='Student Login', students = students)
         elif student and int(pin) == 0:
             # Redirect student to change pin if it's the first time the sign in.
+            flash("Please change your pin")
             return redirect('/change_pin?id=' + student_id)
         elif student and student.pin != int(pin):
             flash("Wrong Pin!")
