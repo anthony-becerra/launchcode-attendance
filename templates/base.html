@@ -21,9 +21,11 @@
         main {
             flex: 1 0 auto;
             background-image: url('https://www.launchcode.org/assets/cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg');
-            background-position: 0px -140px;
+            background-position: center center;
             background-repeat: no-repeat;
+            background-attachment: fixed;
             background-size: cover;
+            background-color: rgba(092,147,206,1) !important;
         }
         .tabs .tab a:hover, .tabs .tab a.active{
             color: rgba(092,147,206,1) !important;
@@ -86,17 +88,26 @@
             font-size: 1.25rem;
             letter-spacing: 1px;
         }
-        .lc-blue{
-            background-color: #344A5F !important;
+        .btn{
+            background-color: #F47753 !important;
         }
-        .lc-light-blue{
-            background-color: #5C93CE !important;
-        }
-        .lc-orange{
+        .btn:hover{
             background-color: #F0400F !important;
         }
+        .lc-blue-text{
+            color: #344A5F !important;
+        }
+        .lc-blue{
+            background-color: #344A5F;
+        }
+        .lc-light-blue{
+            background-color: #5C93CE;
+        }
+        .lc-orange{
+            background-color: #F0400F;
+        }
         .lc-light-orange{
-            background-color: #F47753 !important;
+            background-color: #F47753;
         }
     </style>
     <script>
@@ -109,24 +120,24 @@
             $(".dropdown-button").dropdown();
             // Initialize options
             $('select').material_select();
+            // Flash Messages Toasts
             {% with messages = get_flashed_messages() %}
             {% for message in messages %}
                 Materialize.toast('{{ message }}', 4000);
             {% endfor %}
             {% endwith %}
         });
-        // { flash }
     </script>
 </head>
 <body>
     <header>
         <div class="navbar-fixed">
             <nav>
-                <div class="nav-wrapper lc-blue">
-                    <a href="/" class="brand-logo center">LC Attendance</a>
+                <div class="nav-wrapper white">
+                    <a href="/" class="brand-logo center lc-blue-text">LaunchCode <img src="https://www.launchcode.org/assets/launchcode-7e70c69adb4c3c1aa6d5aa15eba45fac.ico" alt="LC"> Attendance</a>
                     {% if session['email'] %}
                     <ul class="left">
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
+                    <li><a class="dropdown-button waves-effect waves-light lc-blue-text" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
                     </ul>
                     <a href="#" data-activates="mobile-demo" class="button"></a>
                     <ul class="dropdown-content lc-light-orange" id="dropdown">
@@ -135,7 +146,7 @@
                         <li><a class="nav-dropwdown" href="/students" class="waves-effect waves-light"><i class="material-icons left">people</i>Students</a></li>
                     </ul>
                     <ul class="right">
-                        <li><a class="waves-effect waves-light" href="/logout">Logout</a></li>
+                        <li><a class="waves-effect waves-light lc-blue-text" href="/logout">Logout</a></li>
                     </ul>
                     {% else %}
                     {% endif %}
@@ -143,7 +154,7 @@
             </nav>
         </div>
     </header>
-    <main>
+    <main id>
         {% block content %}
         {% endblock %}
     </main>
@@ -156,17 +167,17 @@
             </div>
             <div class="col l4 offset-l1 s12">
                 <h5 class="white-text">Contributors</h5>
-                <!-- <div class="col"> -->
+                <div class="col">
                     <div class="row">
                         <a class="chip lc-light-blue-text" href="https://github.com/anthony-becerra" target='_blank'><img src="https://avatars2.githubusercontent.com/u/27900121?v=4&s=400" alt="Anthony Img">Anthony</a>
                         <a class="chip lc-light-blue-text" href="https://github.com/dannyneira" target='_blank'><img src="https://avatars2.githubusercontent.com/u/16809145?v=4&s=460" alt="Danny Img">Danny</a>
-                    <!-- </div> -->
-                <!-- </div> -->
-                <!-- <div class="col"> -->
-                    <!-- <div class="row"> -->
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
                         <a class="chip lc-light-blue-text" href="https://github.com/kitiarasr" target='_blank'><img src="https://avatars3.githubusercontent.com/u/14181911?v=4&s=400" alt="Kitiara Img">Kitiara</a>
                         <a class="chip lc-light-blue-text" href="https://github.com/jonager" target='_blank'><img src="https://avatars0.githubusercontent.com/u/17533132?v=4&s=400" alt="Jonathan Img">Jonathan</a>
-                    <!-- </div> -->
+                    </div>
                 </div>
             </div>
             </div>
