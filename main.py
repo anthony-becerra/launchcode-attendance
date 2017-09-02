@@ -54,45 +54,48 @@ def teacher_signup():
         email_DB = Teacher.query.filter_by(email=email).first()
         
         #### VALIDATION ####
-
+        err = False
         # check for empty fields
         if val.is_empty(first):
-            flash('Please fill in the first name')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the first name', 'error')
+            err = True
         elif val.is_empty(last):
-            flash('Please fill in the last name')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the last name', 'error')
+            err = True
         elif val.is_empty(email):
-            flash('Please fill in the email')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the email', 'error')
+            err = True
         elif val.is_empty(password):
-            flash('Please fill in the password')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the password', 'error')
+            err = True
         
         # check for spaces
         if val.space(email):
-            flash('Email can\'t have space')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Email can\'t have space', 'error')
+            err = True
 
         #check if email already exists
         if email_DB:
             if email_DB.email:
-                flash('Email already in use')
-                return render_template('teacher_login.html', title = 'Signup', signup='active')
+                flash('Email already in use', 'error')
+                err = True
         
         # check for match
         if password != confirm_pass:
-            flash('Passwords must match')
-            return render_template('teacher_login.html', title = 'Signup')
+            flash('Passwords must match', 'error')
+            err = True
 
         # checks length is bigger than 3 characters.
         if val.wrong_len(password) or val.wrong_len(confirm_pass):
-            flash('Password must be longer than 3 characters')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Password must be longer than 3 characters', 'error')
+            err = True
         
         # Checks that email contains only one period after @ and only one @
         if val.wrong_email(email):
-            flash('Email must contain only one @, one " . " after @')
+            flash('Email must contain only one @, one " . " after @', 'error')
+            err = True
+        
+        if err == True:
             return render_template('teacher_login.html', title = 'Signup', signup='active')
 
         new_teacher = Teacher(first, last, email, password)
@@ -111,10 +114,9 @@ def teacher_login():
             session['email'] = email
             return redirect('/')
         elif teacher and not check_hash(password, teacher.password):
-            flash("Wrong Password!")
-            return render_template('teacher_login.html', title = 'Login', login='active')
-    else:
-        return render_template('teacher_login.html', title = 'Login', login='active')
+            flash("Wrong Password!", 'error')
+
+    return render_template('teacher_login.html', title = 'Login', login='active')
 
 @app.route('/start_day')
 def start_day():
@@ -133,11 +135,11 @@ def start_day():
             return redirect('/student_login')
         else:
              # the day's list has not been created
-            flash('Today\'s attendance hasn\'t been created yet.')
-            return render_template('index.html', title = 'Student Login')
+            flash('Today\'s attendance hasn\'t been created yet.', 'error')
+            return render_template('index.html', title = 'Attendance App')
     else:
         # the day's list already created
-        flash('Today\'s attendance already created')
+        flash('Today\'s attendance already created', 'error')
         return render_template('index.html', title = 'Attendance App')
 
 
@@ -153,32 +155,33 @@ def student_login():
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today()).first()
         
+        
         if not pin:
-            flash("Please enter your Pin!")
+            flash("Please enter your Pin!", 'error')
             return render_template('student_login.html', title ='Student Login', students = students)
         elif not pin.isdigit():
-            flash("Your Pin cannot have Letters!")
+            flash("Your Pin cannot have Letters!", 'error')
             return render_template('student_login.html', title ='Student Login', students = students)
         elif student and student.pin == 0 and student.pin == int(pin):
             # Redirect student to change pin if it's the first time the sign in.
-            flash("Please change your pin")
+            flash("Please change your pin", 'error')
             return redirect('/change_pin?id=' + student_id)
         elif student and student.pin != int(pin):
-            flash("Wrong Pin!")
+            flash("Wrong Pin!", 'error')
             return render_template('student_login.html', title ='Student Login', students = students)
         else:
             # no validation error
             # make student present in attendance table
             student_att.present = True     
             db.session.commit()
-            flash("{0} Signed in!".format(student.first_name.title()))
+            flash(student.first_name.title()+" Signed in!", 'info')
             return render_template('student_login.html', title ='Student Login', students = students)
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
         # Validate if today's date exists in database
         if attendance_exists is None:
-            flash('Please create today\'s attendance list first (Press \'START DAY\' button)')
+            flash('Please create today\'s attendance list first (Press \'START DAY\' button)' , 'error')
             return render_template('index.html', title = 'Attendance App')
         
         return render_template('student_login.html', title = 'Student Login', students = students)
@@ -202,30 +205,30 @@ def change_pin():
         pin = request.form['pin']
         confirm_pin = request.form['confirm_pin']
 
-        # Validation
+        ### Validation ###
+        err = False
         if val.is_empty(pin) or val.is_empty(confirm_pin):
-            flash('Please enter a pin')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Please enter a pin', 'error')
+            err = True
         elif pin != confirm_pin:
-            flash('Pins must match')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Pins must match', 'error')
+            err = True
         elif len(pin) != 4 or not pin.isdigit():
-            flash('Pin must be 4 digits long and can only contain integers')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Pin must be 4 digits long and can only contain integers', 'error')
+            err = True
         elif int(pin) == 0:
-            flash('Your pin can\'t be 0')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Your pin can\'t be 0', 'error')
+            err = True
+
+        if err == True:
+            return render_template('change_pin.html',student = student, title = 'Change Pin')
 
         # change pin in the user table
         student.pin = pin
         # sign in students for the day, attendance table
         student_att.present = True     
         db.session.commit()
-        flash(student.first_name.title() + ' Logged in!')
+        flash(student.first_name.title() +' Signed in!', 'info')
         return redirect('/student_login')
 
 @app.route("/attendance", methods=['GET', 'POST'])

@@ -39,6 +39,10 @@
         nav .brand-logo{
             font-size: 1.75rem;
         }
+        nav li a{
+            font-weight: 700;
+            text-transform: uppercase;
+        }
         .dropdown-content li>span{
             color: #344A5F !important;
         }
@@ -49,7 +53,7 @@
             background-color: #F0400F !important;
         }
         .dropdown-content{
-            min-width: 165px;
+            min-width: 190px;
         }
         .page-footer .footer-copyright{
             background-color: rgba(51,51,51,0.1) !important;
@@ -97,8 +101,17 @@
         .btn:hover{
             background-color: #F0400F !important;
         }
+        .error{
+            background-color: #F0400F !important;
+        }
+        .info{
+            background-color: seagreen !important;
+        }
         .lc-blue-text{
             color: #344A5F !important;
+        }
+        nav li a.lc-blue-text:hover{
+            color: #5C93CE !important;
         }
         .lc-blue{
             background-color: #344A5F;
@@ -124,9 +137,9 @@
             // Initialize options
             $('select').material_select();
             // Flash Messages Toasts
-            {% with messages = get_flashed_messages() %}
-            {% for message in messages %}
-                Materialize.toast('{{ message }}', 4000);
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% for class, message in messages %}
+                Materialize.toast('{{ message }}', 4000, '{{ class }}');
             {% endfor %}
             {% endwith %}
         });
@@ -137,10 +150,10 @@
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper white">
-                    <a href="/" class="brand-logo center lc-blue-text">LaunchCode <img src="https://www.launchcode.org/assets/launchcode-7e70c69adb4c3c1aa6d5aa15eba45fac.ico" alt="LC"> Attendance</a>
+                    <a href="/" class="brand-logo center lc-blue-text"><img src="https://www.launchcode.org/assets/dabomb-28b8ab97074a9227f8bdf7c2fc61daf2.svg" alt="LC"></a>
                     {% if session['email'] %}
                     <ul class="left">
-                    <li><a class="dropdown-button waves-effect waves-light lc-blue-text" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
+                        <li><a class="dropdown-button waves-effect waves-light lc-blue-text" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
                     </ul>
                     <a href="#" data-activates="mobile-demo" class="button"></a>
                     <ul class="dropdown-content lc-light-orange" id="dropdown">
