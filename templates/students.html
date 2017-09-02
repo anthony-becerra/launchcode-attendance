@@ -18,5 +18,25 @@
 {% endfor %}
 </table>
 
-<button><a href="/edit_student">Add Student</a></button>
+<h4>Add Student</h4>
+<!-- input form of first and last name, and pin, cohort, city -->
+
+<form method="post">
+    <table>
+        <tr>
+
+            <td><label for="first_name">First Name</label></td>
+            <td>
+                <input name="first_name" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="last_name">Last Name</label></td>
+            <td>
+                <input name="last_name" type="text" >
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Add Student">
+</form>
 {% endblock %}

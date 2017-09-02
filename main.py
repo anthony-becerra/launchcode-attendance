@@ -27,6 +27,15 @@ def attendance_list():
 #TODO
 @app.route('/students', methods=["POST", "GET"])
 def students():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+
+        student = Student(first_name, last_name)
+        db.session.add(student)
+        db.session.commit()
+        return redirect('/students')
+
     students = Student.query.all()
     return render_template('students.html', students=students)
     # else:
@@ -198,20 +207,6 @@ def editStudent():
         id = request.args.get('id')  
         student = Student.query.filter_by(id=id).first()
         return render_template("edit_student.html", student=student)
-
-@app.route("/add_student", methods=['GET', 'POST'])
-def addStudent():
-    if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-
-        student = Student(first_name, last_name)
-        db.session.add(student)
-        db.session.commit()
-        return redirect('/students')
-    else:
-        return render_template("add_student.html")
-
 
 
 if __name__ == "__main__":
