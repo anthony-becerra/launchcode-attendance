@@ -1,4 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Students table + add and edit buttons go here</h2>
+
+<!-- table -->
+<table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th> 
+        </tr>
+{% for student in students %}
+    <tr>
+        <td>{{student.first_name}}</td>
+        <td>{{student.last_name}}</td>
+    <!-- each individual edit button -->
+        <td><button><a href="/edit_student?id={{student.id}}">Edit</a></button></td>
+    </tr>
+{% endfor %}
+</table>
+
+<h4>Add Student</h4>
+<!-- input form of first and last name, and pin, cohort, city -->
+
+<form method="post">
+    <table>
+        <tr>
+
+            <td><label for="first_name">First Name</label></td>
+            <td>
+                <input name="first_name" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="last_name">Last Name</label></td>
+            <td>
+                <input name="last_name" type="text" >
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Add Student">
+</form>
 {% endblock %}
