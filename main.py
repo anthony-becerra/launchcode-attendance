@@ -174,6 +174,45 @@ def attendance():
         return render_template("attendance.html", dates=dates)
 
 
+@app.route("/edit_student", methods=['GET', 'POST'])
+def editStudent():
+    if request.method == 'POST':
+        id = request.form['student_id']
+        student = Student.query.filter_by(id=id).first()
+
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        pin = request.form['pin']
+        cohort = request.form['cohort']
+        city = request.form['city']
+
+        student.first_name = first_name
+        student.last_name= last_name
+        student.pin = pin
+        student.cohort = cohort
+        student.city = city
+
+        db.session.commit()
+        return redirect('/students')
+    else:
+        id = request.args.get('id')  
+        student = Student.query.filter_by(id=id).first()
+        return render_template("edit_student.html", student=student)
+
+@app.route("/add_student", methods=['GET', 'POST'])
+def addStudent():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+
+        student = Student(first_name, last_name)
+        db.session.add(student)
+        db.session.commit()
+        return redirect('/students')
+    else:
+        return render_template("add_student.html")
+
+
 
 if __name__ == "__main__":
     app.run()
