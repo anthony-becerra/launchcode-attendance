@@ -9,7 +9,15 @@
                 <div class="input-field col s12">
                     <select name="student_id" id="students">
                         {% for student in students %}
+                        {% if student_err %}
+                        {% if student_err.id == student.id %}
+                        <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% else %}
                         <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% endif %}
+                        {% else %}
+                        <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% endif %}
                         {% endfor %}
                         <label for="students">Students</label>
                     </select>
@@ -20,7 +28,7 @@
                 </div>
             </div>
             <div class="row">
-                <button class="btn waves-effect waves-light lc-light-orange right" type="submit" name="action">Sign-In</button>
+                <button class="btn waves-effect waves-light right" type="submit" name="action">Sign-In</button>
             </div>
         </form>
     </div>

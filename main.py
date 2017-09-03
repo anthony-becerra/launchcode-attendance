@@ -1,21 +1,36 @@
-from app import app, db
+from app import app, db, ALLOWED_EXTENSIONS
 from flask import request, redirect, render_template, session, flash 
 from models import Student, Teacher, Attendance
 from datetime import datetime, date 
-from app import app, db
 from models import Student, Teacher, Attendance
 from hash_tools import make_hash, check_hash
+from random import choice
 import val
 import pandas as pd 
 from io import BytesIO # built-in in python, no need to install
 import xlsxwriter
 from werkzeug.utils import secure_filename
 
+def bg_image(key=None):
+    bg_images = {'index':'cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg',
+                'teacher':'learn_banner_blue-105e0234e99f61dcc8f06852d653d617.jpg',
+                'student':'apply_banner_blue-1340ee49156f5f7ac7a4b9bb0ce8ef5c.jpg',
+                'settings':'hire_banner_blue-8e55ca145435f6a988067be969412c24.jpg'}
+    if key == None:
+        return choice(list(bg_images.values()))
+    else:
+        return bg_images[key]
+
+def allowed_file(filename):
+    '''Checks that file extension is in ALLOWED_EXTENSIONS'''
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 # Main View
 @app.route('/')
 def index():
     session['email'] = "lol@gmail.com"
-    return render_template('index.html')
+    return render_template('index.html', title='LaunchCode Attendance', bg_image=bg_image())
 
 # Logout
 @app.route('/logout')
@@ -26,7 +41,7 @@ def logout():
 # Attendance List
 @app.route('/attendance_list', methods=["POST", "GET"])
 def attendance_list():
-    return render_template('attendance_list.html')
+    return render_template('attendance_list.html', title='Attendance', bg_image=bg_image('settings'))
 
 #TODO
 @app.route('/students', methods=["POST", "GET"])
@@ -41,9 +56,7 @@ def students():
         return redirect('/students')
 
     students = Student.query.all()
-    return render_template('students.html', students=students)
-    # else:
-    #     return render_template('teacher_login.html', title = 'Signup', signup='active')
+    return render_template('students.html', students=students, bg_image=bg_image('settings'))
 
 @app.route("/teacher_signup", methods=['POST'])
 def teacher_signup():
@@ -58,46 +71,49 @@ def teacher_signup():
         email_DB = Teacher.query.filter_by(email=email).first()
         
         #### VALIDATION ####
-
+        err = False
         # check for empty fields
         if val.is_empty(first):
-            flash('Please fill in the first name')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the first name', 'error')
+            err = True
         elif val.is_empty(last):
-            flash('Please fill in the last name')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the last name', 'error')
+            err = True
         elif val.is_empty(email):
-            flash('Please fill in the email')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the email', 'error')
+            err = True
         elif val.is_empty(password):
-            flash('Please fill in the password')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Please fill in the password', 'error')
+            err = True
         
         # check for spaces
         if val.space(email):
-            flash('Email can\'t have space')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Email can\'t have space', 'error')
+            err = True
 
         #check if email already exists
         if email_DB:
             if email_DB.email:
-                flash('Email already in use')
-                return render_template('teacher_login.html', title = 'Signup', signup='active')
+                flash('Email already in use', 'error')
+                err = True
         
         # check for match
         if password != confirm_pass:
-            flash('Passwords must match')
-            return render_template('teacher_login.html', title = 'Signup')
+            flash('Passwords must match', 'error')
+            err = True
 
         # checks length is bigger than 3 characters.
         if val.wrong_len(password) or val.wrong_len(confirm_pass):
-            flash('Password must be longer than 3 characters')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Password must be longer than 3 characters', 'error')
+            err = True
         
         # Checks that email contains only one period after @ and only one @
         if val.wrong_email(email):
-            flash('Email must contain only one @, one " . " after @')
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            flash('Email must contain only one @, one " . " after @', 'error')
+            err = True
+        
+        if err == True:
+            return render_template('teacher_login.html', title='Signup',signup='active', bg_image=bg_image('teacher'))
 
         new_teacher = Teacher(first, last, email, password)
         db.session.add(new_teacher)
@@ -115,10 +131,9 @@ def teacher_login():
             session['email'] = email
             return redirect('/')
         elif teacher and not check_hash(password, teacher.password):
-            flash("Wrong Password!")
-            return render_template('teacher_login.html', title = 'Login', login='active')
-    else:
-        return render_template('teacher_login.html', title = 'Login', login='active')
+            flash("Wrong Password!", 'error')
+
+    return render_template('teacher_login.html', title='Login', login='active', bg_image=bg_image('teacher'))
 
 @app.route('/start_day')
 def start_day():
@@ -137,18 +152,17 @@ def start_day():
             return redirect('/student_login')
         else:
              # the day's list has not been created
-            flash('Today\'s attendance hasn\'t been created yet.')
-            return render_template('index.html', title = 'Student Login')
+            flash('Today\'s attendance hasn\'t been created yet.', 'error')
+            return redirect('/')
     else:
         # the day's list already created
-        flash('Today\'s attendance already created')
-        return render_template('index.html', title = 'Attendance App')
+        flash('Today\'s attendance already created', 'error')
+        return redirect('/')
 
 
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
     students = Student.query.order_by(Student.last_name).all()
-
 
     if request.method == 'POST':
         student_id = request.form['student_id']
@@ -157,35 +171,41 @@ def student_login():
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today()).first()
         
+        ### Validation ###
+        err = False
+
         if not pin:
-            flash("Please enter your Pin!")
-            return render_template('student_login.html', title ='Student Login', students = students)
+            flash("Please enter your Pin!", 'error')
+            err = True
         elif not pin.isdigit():
-            flash("Your Pin cannot have Letters!")
-            return render_template('student_login.html', title ='Student Login', students = students)
+            flash("Your Pin cannot have Letters!", 'error')
+            err = True
         elif student and student.pin == 0 and student.pin == int(pin):
             # Redirect student to change pin if it's the first time the sign in.
-            flash("Please change your pin")
+            flash("Please change your pin", 'error')
             return redirect('/change_pin?id=' + student_id)
         elif student and student.pin != int(pin):
-            flash("Wrong Pin!")
-            return render_template('student_login.html', title ='Student Login', students = students)
+            flash("Wrong Pin!", 'error')
+            err = True
+
+        if err == True:
+            return render_template('student_login.html', title='Student Login', student_err=student, students=students, bg_image=bg_image('student'))
         else:
             # no validation error
             # make student present in attendance table
             student_att.present = True     
             db.session.commit()
-            flash("{0} Signed in!".format(student.first_name.title()))
-            return render_template('student_login.html', title ='Student Login', students = students)
+            flash(student.first_name.title()+" Signed in!", 'info')
+            return render_template('student_login.html', title='Student Login', students=students, bg_image=bg_image('student'))
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
         # Validate if today's date exists in database
         if attendance_exists is None:
-            flash('Please create today\'s attendance list first (Press \'START DAY\' button)')
-            return render_template('index.html', title = 'Attendance App')
+            flash('Please create today\'s attendance list first (Press \'START DAY\' button)' , 'error')
+            return redirect('/')
         
-        return render_template('student_login.html', title = 'Student Login', students = students)
+        return render_template('student_login.html', title='Student Login', students=students, bg_image=bg_image('student'))
 
 # Allows students to change their pin the very first time
 # (first time an attendance list is created) the sign in.
@@ -195,41 +215,40 @@ def change_pin():
     if request.method == 'GET':
         student_id = request.args.get('id')
         student = Student.query.get(student_id)
-        # return render_template('change_pin.html', name = name, student = student)
-        return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+
+        return render_template('change_pin.html', student=student, title='Change Pin', bg_image=bg_image('student'))
     else:
         student_id = request.form['student_id']
         student = Student.query.get(student_id)
-        student_att = Attendance.query.filter_by(owner_id = student_id,
+        student_att = Attendance.query.filter_by(owner_id=student_id,
             date_now = date.today()).first()
         pin = request.form['pin']
         confirm_pin = request.form['confirm_pin']
 
-        # Validation
+        ### Validation ###
+        err = False
         if val.is_empty(pin) or val.is_empty(confirm_pin):
-            flash('Please enter a pin')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Please enter a pin', 'error')
+            err = True
         elif pin != confirm_pin:
-            flash('Pins must match')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Pins must match', 'error')
+            err = True
         elif len(pin) != 4 or not pin.isdigit():
-            flash('Pin must be 4 digits long and can only contain integers')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Pin must be 4 digits long and can only contain integers', 'error')
+            err = True
         elif int(pin) == 0:
-            flash('Your pin can\'t be 0')
-            return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+            flash('Your pin can\'t be 0000', 'error')
+            err = True
+
+        if err == True:
+            return render_template('change_pin.html',student=student, title='Change Pin', bg_image=bg_image('student'))
 
         # change pin in the user table
         student.pin = pin
         # sign in students for the day, attendance table
         student_att.present = True     
         db.session.commit()
-        flash(student.first_name.title() + ' Logged in!')
+        flash(student.first_name.title() +' Signed in!', 'info')
         return redirect('/student_login')
 
 @app.route("/attendance", methods=['GET', 'POST'])
@@ -237,14 +256,14 @@ def attendance():
     if request.method == 'POST':
         date_now = request.form['date_now']
         attendance = Attendance.query.filter_by(date_now=date_now).all()
-        return render_template("attendance.html", attendance=attendance)
+        return render_template("attendance.html", attendance=attendance, bg_image=bg_image('settings'))
     else:
         dates = Attendance.query.filter_by().all()
-        return render_template("attendance.html", dates=dates)
+        return render_template("attendance.html", dates=dates, bg_image=bg_image('settings'))
 
 
 @app.route("/edit_student", methods=['GET', 'POST'])
-def editStudent():
+def edit_student():
     if request.method == 'POST':
         id = request.form['student_id']
         student = Student.query.filter_by(id=id).first()
@@ -266,37 +285,45 @@ def editStudent():
     else:
         id = request.args.get('id')  
         student = Student.query.filter_by(id=id).first()
-        return render_template("edit_student.html", student=student)
-
+        return render_template("edit_student.html", student=student, bg_image=bg_image('settings'))
 
 # Adds all the cohorts students at once into the student table
 # only accepts .xlsx files
 @app.route('/upload_file', methods = ['POST'])
 def upload_file():
 
-    if request.method == 'POST':
-        # TODO add validation, in case user didn't select any file to upload
-        # TODO checks if only accepts .xlsx files
-        
+    if request.method == 'POST':     
         file = request.files['file']
-        file = secure_filename(file.filename) # prevents people from uploading
-        # malicious code
+        # checks if user uploads no file
+        if file.filename == '':
+            flash('No file selected', 'error')
+            return redirect('/students')
+        if file and allowed_file(file.filename):
+        # prevents people from uploading malicious code
+            file = secure_filename(file.filename)
+            print('#########')
+            print(file)
+            print('#########')
+            print('#########')
 
-    # ----------- Reads Files and pushes to student table -------------
-    df = pd.read_excel(file)
-    # df.columns is a list of all the table headings, 'First Name' and 'Last Name'
-    # in this case.
-    first_name = list(df[df.columns[0]])
-    last_name = list(df[df.columns[1]])
-    #  names is a list of tupples in the form of (first_name, last_name)
-    names = zip(first_name,last_name)
+            # ----------- Reads Files and pushes to student table -------------
+            df = pd.read_excel(file)
+            # df.columns is a list of all the table headings, 'First Name' and 'Last Name'
+            # in this case.
+            first_name = list(df[df.columns[0]])
+            last_name = list(df[df.columns[1]])
+            #  names is a list of tupples in the form of (first_name, last_name)
+            names = zip(first_name,last_name)
 
-    # creates a record for row in students.xlsx into the student table.
-    for name in names:
-        student = Student(name[0].title(), name[1].title())
-        db.session.add(student)
-    db.session.commit()
-    return render_template("students.html")
+            # creates a record for row in students.xlsx into the student table.
+            for name in names:
+                student = Student(name[0].title(), name[1].title())
+                db.session.add(student)
+            db.session.commit()
+            return render_template("students.html")
+        else:
+            flash('You can only upload excel files with .xlsx extension', 'error')
+            return redirect('/students')
 
 
 
