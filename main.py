@@ -256,9 +256,11 @@ def attendance():
     if request.method == 'POST':
         date_now = request.form['date_now']
         attendance = Attendance.query.filter_by(date_now=date_now).all()
-        return render_template("attendance.html", attendance=attendance, bg_image=bg_image('settings'))
+        return render_template("attendance.html", attendance=attendance)
     else:
         dates = Attendance.query.filter_by().all()
+        return render_template("attendance.html", dates=dates)
+        
         return render_template("attendance.html", dates=dates, bg_image=bg_image('settings'))
 
 
