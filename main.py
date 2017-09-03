@@ -299,12 +299,9 @@ def upload_file():
             flash('No file selected', 'error')
             return redirect('/students')
         if file and allowed_file(file.filename):
-        # prevents people from uploading malicious code
-            file = secure_filename(file.filename)
-            print('#########')
-            print(file)
-            print('#########')
-            print('#########')
+            # TODO prevent people from uploading malicious files with the 
+            # function below
+            # file = secure_filename(file.filename)
 
             # ----------- Reads Files and pushes to student table -------------
             df = pd.read_excel(file)
@@ -320,10 +317,35 @@ def upload_file():
                 student = Student(name[0].title(), name[1].title())
                 db.session.add(student)
             db.session.commit()
-            return render_template("students.html")
+            flash('Students entered in the system!', 'info')
+            return redirect('students')
         else:
+            #  User uploaded the wrong type of files
             flash('You can only upload excel files with .xlsx extension', 'error')
             return redirect('/students')
+
+@app.route('/download_list')
+def download_list():
+        
+        students = Student.query.all()
+        first_names = []
+        last_names = []
+        
+        # Get the information from student table and populates the arrays above
+        for student in students:
+            first_names.append(student.first_name)
+            last_names.append(student.last_name)
+
+        # creates a dictionary where names will be the headers for the spreadsheet
+        # and the values(lists, see above) are rows for each column.
+        df = pd.DataFrame({'First Name': first_names, 'Last Name': last_names})
+        output = BytesIO()
+        writer = pd.ExcelWriter(output, engine = 'xlsxwriter')
+        df.to_excel(writer, 'Sheet1', index=False)
+        writer.save()
+        output.seek(0)
+
+        return send_file(output, attachment_filename='attendance_list.xlsx',as_attachment=True)
 
 
 
