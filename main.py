@@ -10,8 +10,13 @@ import val
 # Main View
 @app.route('/')
 def index():
+    bg_images = {'index':'cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg',
+                 'teacher':'learn_banner_blue-105e0234e99f61dcc8f06852d653d617.jpg',
+                 'student':'apply_banner_blue-1340ee49156f5f7ac7a4b9bb0ce8ef5c.jpg',
+                 'settings':'hire_banner_blue-8e55ca145435f6a988067be969412c24.jpg'}
+
     session['email'] = "lol@gmail.com"
-    return render_template('index.html')
+    return render_template('index.html', bg_image=bg_image['index'])
 
 # Logout
 @app.route('/logout')
