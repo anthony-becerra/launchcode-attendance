@@ -261,8 +261,6 @@ def attendance():
         dates = Attendance.query.filter_by().all()
         return render_template("attendance.html", dates=dates)
         
-        return render_template("attendance.html", dates=dates, bg_image=bg_image('settings'))
-
 
 @app.route("/edit_student", methods=['GET', 'POST'])
 def edit_student():
@@ -325,6 +323,8 @@ def upload_file():
             #  User uploaded the wrong type of files
             flash('You can only upload excel files with .xlsx extension', 'error')
             return redirect('/students')
+
+@app.route()
 
 @app.route('/download_list')
 def download_list():
