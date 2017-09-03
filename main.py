@@ -2,21 +2,26 @@ from app import app, db
 from flask import request, redirect, render_template, session, flash 
 from models import Student, Teacher, Attendance
 from datetime import datetime, date 
-from app import app, db
 from models import Student, Teacher, Attendance
 from hash_tools import make_hash, check_hash
+from random import choice
 import val
+
+def bg_image(key=None):
+    bg_images = {'index':'cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg',
+                'teacher':'learn_banner_blue-105e0234e99f61dcc8f06852d653d617.jpg',
+                'student':'apply_banner_blue-1340ee49156f5f7ac7a4b9bb0ce8ef5c.jpg',
+                'settings':'hire_banner_blue-8e55ca145435f6a988067be969412c24.jpg'}
+    if key == None:
+        return choice(list(bg_images.values()))
+    else:
+        return bg_images[key]
 
 # Main View
 @app.route('/')
 def index():
-    bg_images = {'index':'cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg',
-                 'teacher':'learn_banner_blue-105e0234e99f61dcc8f06852d653d617.jpg',
-                 'student':'apply_banner_blue-1340ee49156f5f7ac7a4b9bb0ce8ef5c.jpg',
-                 'settings':'hire_banner_blue-8e55ca145435f6a988067be969412c24.jpg'}
-
     session['email'] = "lol@gmail.com"
-    return render_template('index.html', bg_image=bg_image['index'])
+    return render_template('index.html', title='LaunchCode Attendance', bg_image=bg_image())
 
 # Logout
 @app.route('/logout')
@@ -27,7 +32,7 @@ def logout():
 # Attendance List
 @app.route('/attendance_list', methods=["POST", "GET"])
 def attendance_list():
-    return render_template('attendance_list.html')
+    return render_template('attendance_list.html', title='Attendance', bg_image=bg_image('settings'))
 
 #TODO
 @app.route('/students', methods=["POST", "GET"])
@@ -42,9 +47,7 @@ def students():
         return redirect('/students')
 
     students = Student.query.all()
-    return render_template('students.html', students=students)
-    # else:
-    #     return render_template('teacher_login.html', title = 'Signup', signup='active')
+    return render_template('students.html', students=students, bg_image=bg_image('settings'))
 
 @app.route("/teacher_signup", methods=['POST'])
 def teacher_signup():
@@ -101,7 +104,7 @@ def teacher_signup():
             err = True
         
         if err == True:
-            return render_template('teacher_login.html', title = 'Signup', signup='active')
+            return render_template('teacher_login.html', title='Signup',signup='active', bg_image=bg_image('teacher'))
 
         new_teacher = Teacher(first, last, email, password)
         db.session.add(new_teacher)
@@ -121,7 +124,7 @@ def teacher_login():
         elif teacher and not check_hash(password, teacher.password):
             flash("Wrong Password!", 'error')
 
-    return render_template('teacher_login.html', title = 'Login', login='active')
+    return render_template('teacher_login.html', title='Login', login='active', bg_image=bg_image('teacher'))
 
 @app.route('/start_day')
 def start_day():
@@ -141,17 +144,16 @@ def start_day():
         else:
              # the day's list has not been created
             flash('Today\'s attendance hasn\'t been created yet.', 'error')
-            return render_template('index.html', title = 'Attendance App')
+            return redirect('/')
     else:
         # the day's list already created
         flash('Today\'s attendance already created', 'error')
-        return render_template('index.html', title = 'Attendance App')
+        return redirect('/')
 
 
 @app.route('/student_login', methods=["POST", "GET"])
 def student_login():
     students = Student.query.order_by(Student.last_name).all()
-
 
     if request.method == 'POST':
         student_id = request.form['student_id']
@@ -160,36 +162,41 @@ def student_login():
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today()).first()
         
-        
+        ### Validation ###
+        err = False
+
         if not pin:
             flash("Please enter your Pin!", 'error')
-            return render_template('student_login.html', title ='Student Login', students = students)
+            err = True
         elif not pin.isdigit():
             flash("Your Pin cannot have Letters!", 'error')
-            return render_template('student_login.html', title ='Student Login', students = students)
+            err = True
         elif student and student.pin == 0 and student.pin == int(pin):
             # Redirect student to change pin if it's the first time the sign in.
             flash("Please change your pin", 'error')
             return redirect('/change_pin?id=' + student_id)
         elif student and student.pin != int(pin):
             flash("Wrong Pin!", 'error')
-            return render_template('student_login.html', title ='Student Login', students = students)
+            err = True
+
+        if err == True:
+            return render_template('student_login.html', title='Student Login', student_err=student, students=students, bg_image=bg_image('student'))
         else:
             # no validation error
             # make student present in attendance table
             student_att.present = True     
             db.session.commit()
             flash(student.first_name.title()+" Signed in!", 'info')
-            return render_template('student_login.html', title ='Student Login', students = students)
+            return render_template('student_login.html', title='Student Login', students=students, bg_image=bg_image('student'))
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
         # Validate if today's date exists in database
         if attendance_exists is None:
             flash('Please create today\'s attendance list first (Press \'START DAY\' button)' , 'error')
-            return render_template('index.html', title = 'Attendance App')
+            return redirect('/')
         
-        return render_template('student_login.html', title = 'Student Login', students = students)
+        return render_template('student_login.html', title='Student Login', students=students, bg_image=bg_image('student'))
 
 # Allows students to change their pin the very first time
 # (first time an attendance list is created) the sign in.
@@ -199,13 +206,12 @@ def change_pin():
     if request.method == 'GET':
         student_id = request.args.get('id')
         student = Student.query.get(student_id)
-        # return render_template('change_pin.html', name = name, student = student)
-        return render_template('change_pin.html',student = student,
-            title = 'Change Pin')
+
+        return render_template('change_pin.html', student=student, title='Change Pin', bg_image=bg_image('student'))
     else:
         student_id = request.form['student_id']
         student = Student.query.get(student_id)
-        student_att = Attendance.query.filter_by(owner_id = student_id,
+        student_att = Attendance.query.filter_by(owner_id=student_id,
             date_now = date.today()).first()
         pin = request.form['pin']
         confirm_pin = request.form['confirm_pin']
@@ -222,11 +228,11 @@ def change_pin():
             flash('Pin must be 4 digits long and can only contain integers', 'error')
             err = True
         elif int(pin) == 0:
-            flash('Your pin can\'t be 0', 'error')
+            flash('Your pin can\'t be 0000', 'error')
             err = True
 
         if err == True:
-            return render_template('change_pin.html',student = student, title = 'Change Pin')
+            return render_template('change_pin.html',student=student, title='Change Pin', bg_image=bg_image('student'))
 
         # change pin in the user table
         student.pin = pin
@@ -241,10 +247,10 @@ def attendance():
     if request.method == 'POST':
         date_now = request.form['date_now']
         attendance = Attendance.query.filter_by(date_now=date_now).all()
-        return render_template("attendance.html", attendance=attendance)
+        return render_template("attendance.html", attendance=attendance, bg_image=bg_image('settings'))
     else:
         dates = Attendance.query.filter_by().all()
-        return render_template("attendance.html", dates=dates)
+        return render_template("attendance.html", dates=dates, bg_image=bg_image('settings'))
 
 
 @app.route("/edit_student", methods=['GET', 'POST'])
@@ -270,7 +276,7 @@ def edit_student():
     else:
         id = request.args.get('id')  
         student = Student.query.filter_by(id=id).first()
-        return render_template("edit_student.html", student=student)
+        return render_template("edit_student.html", student=student, bg_image=bg_image('settings'))
 
 if __name__ == "__main__":
     app.run()
