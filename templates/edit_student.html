@@ -41,5 +41,12 @@
     <input type="submit" value="Save Changes">
 </form>
 
+<!-- Adds all the cohorts students at once into the student table
+     only accepts .xlsx files -->
+<form action = "/upload_file" method = "POST" enctype = "multipart/form-data">
+    <input type = "file" name = "file" /><br><br>
+    <input type = "submit"/>
+</form>
+
 {% endblock %}
 

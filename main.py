@@ -6,6 +6,10 @@ from app import app, db
 from models import Student, Teacher, Attendance
 from hash_tools import make_hash, check_hash
 import val
+import pandas as pd 
+from io import BytesIO # built-in in python, no need to install
+import xlsxwriter
+from werkzeug.utils import secure_filename
 
 # Main View
 @app.route('/')
@@ -263,6 +267,38 @@ def editStudent():
         id = request.args.get('id')  
         student = Student.query.filter_by(id=id).first()
         return render_template("edit_student.html", student=student)
+
+
+# Adds all the cohorts students at once into the student table
+# only accepts .xlsx files
+@app.route('/upload_file', methods = ['POST'])
+def upload_file():
+
+    if request.method == 'POST':
+        # TODO add validation, in case user didn't select any file to upload
+        # TODO checks if only accepts .xlsx files
+        
+        file = request.files['file']
+        file = secure_filename(file.filename) # prevents people from uploading
+        # malicious code
+
+    # ----------- Reads Files and pushes to student table -------------
+    df = pd.read_excel(file)
+    # df.columns is a list of all the table headings, 'First Name' and 'Last Name'
+    # in this case.
+    first_name = list(df[df.columns[0]])
+    last_name = list(df[df.columns[1]])
+    #  names is a list of tupples in the form of (first_name, last_name)
+    names = zip(first_name,last_name)
+
+    # creates a record for row in students.xlsx into the student table.
+    for name in names:
+        student = Student(name[0].title(), name[1].title())
+        db.session.add(student)
+    db.session.commit()
+    return render_template("students.html")
+
+
 
 
 if __name__ == "__main__":

@@ -39,4 +39,16 @@
     </table>
     <input type="submit" value="Add Student">
 </form>
+
+<!-- Adds all the cohorts students at once into the student table
+     only accepts .xlsx files -->
+    <br>
+    <br>
+    <h3>Add roster for this cohort.</h3>
+     <form action = "/upload_file" method = "POST" enctype = "multipart/form-data">
+        <input type = "file" name = "file" /><br><br>
+        <input type = "submit"/>
+    </form>
+    <br>
+    <br>
 {% endblock %}
