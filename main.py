@@ -1,5 +1,5 @@
 from app import app, db, ALLOWED_EXTENSIONS
-from flask import request, redirect, render_template, session, flash 
+from flask import request, redirect, render_template, session, flash, send_file
 from models import Student, Teacher, Attendance
 from datetime import datetime, date 
 from models import Student, Teacher, Attendance
@@ -253,12 +253,9 @@ def change_pin():
 
 @app.route("/attendance", methods=['GET', 'POST'])
 def attendance():
-    if request.method == 'POST':
-        date_now = request.form['date_now']
-        attendance = Attendance.query.filter_by(date_now=date_now).all()
-        return render_template("attendance.html", attendance=attendance)
-    else:
-        dates = Attendance.query.filter_by().all()
+    if request.method == 'GET':
+        # dates = Attendance.query.distinct(Attendance.date_now)
+        dates = db.session.query(Attendance.date_now).distinct()
         return render_template("attendance.html", dates=dates)
         
 
@@ -324,33 +321,35 @@ def upload_file():
             flash('You can only upload excel files with .xlsx extension', 'error')
             return redirect('/students')
 
-@app.route()
 
-@app.route('/download_list')
+@app.route('/download_att', methods=['GET'])
 def download_list():
         
-        students = Student.query.all()
+        date_att = request.args.get('date_att')
+        att_list = Attendance.query.filter_by(date_now=date_att).all()
         first_names = []
         last_names = []
+        date = []
+        present =[]
         
-        # Get the information from student table and populates the arrays above
-        for student in students:
-            first_names.append(student.first_name)
-            last_names.append(student.last_name)
+        # Get the information from attedance table and populates the arrays above
+        for att in att_list:
+            first_names.append(att.owner.first_name)
+            last_names.append(att.owner.last_name)
+            date.append(att.date_now)
+            present.append(att.present)
 
-        # creates a dictionary where names will be the headers for the spreadsheet
+        # creates a dictionary where names,date, present, will be the headers for the spreadsheet
         # and the values(lists, see above) are rows for each column.
-        df = pd.DataFrame({'First Name': first_names, 'Last Name': last_names})
+        df = pd.DataFrame({'First Name': first_names, 'Last Name': last_names, 
+            'Date': date, 'Present': present})
         output = BytesIO()
         writer = pd.ExcelWriter(output, engine = 'xlsxwriter')
         df.to_excel(writer, 'Sheet1', index=False)
         writer.save()
         output.seek(0)
 
-        return send_file(output, attachment_filename='attendance_list.xlsx',as_attachment=True)
-
-
-
+        return send_file(output, attachment_filename='attendance:' + str(att.date_now) +'.xlsx',as_attachment=True)
 
 if __name__ == "__main__":
     app.run()
