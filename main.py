@@ -7,17 +7,24 @@ from models import Student, Teacher, Attendance
 from hash_tools import make_hash, check_hash
 import val
 
+
+@app.before_request 
+def require_login():
+    allowed_routes = ['teacher_login'] # List of routes user can see without logging in.
+    if request.endpoint not in allowed_routes and 'email' not in session:
+        return redirect('/teacher_login')
+
 # Main View
 @app.route('/')
 def index():
-    session['email'] = "lol@gmail.com"
+    #session['email'] = "lol@gmail.com" >>> Test for session without using teacher account
     return render_template('index.html')
 
 # Logout
 @app.route('/logout')
 def logout():
   del session['email']
-  return redirect('/')
+  return redirect('/teacher_login')
 
 # Attendance List
 @app.route('/attendance_list', methods=["POST", "GET"])
