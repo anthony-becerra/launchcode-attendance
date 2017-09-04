@@ -1,11 +1,15 @@
-from app import app, db
-from flask import request, redirect, render_template, session, flash 
+from app import app, db, ALLOWED_EXTENSIONS
+from flask import request, redirect, render_template, session, flash, send_file
 from models import Student, Teacher, Attendance
 from datetime import datetime, date 
 from models import Student, Teacher, Attendance
 from hash_tools import make_hash, check_hash
 from random import choice
 import val
+import pandas as pd 
+from io import BytesIO # built-in in python, no need to install
+import xlsxwriter
+from werkzeug.utils import secure_filename
 
 def bg_image(key=None):
     bg_images = {'index':'cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg',
@@ -16,6 +20,11 @@ def bg_image(key=None):
         return choice(list(bg_images.values()))
     else:
         return bg_images[key]
+
+def allowed_file(filename):
+    '''Checks that file extension is in ALLOWED_EXTENSIONS'''
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 # Main View
 @app.route('/')
@@ -248,9 +257,10 @@ def attendance():
         attendance = Attendance.query.filter_by(date_now=date_now).all()
         return render_template("attendance.html", attendance = attendance, bg_image = bg_image('settings'))
     else:
-        dates = Attendance.query.filter_by().all()
-        return render_template("attendance.html", dates = dates, bg_image = bg_image('settings'))
-
+        # dates = Attendance.query.distinct(Attendance.date_now)
+        dates = db.session.query(Attendance.date_now).distinct()
+        return render_template("attendance.html", dates=dates)
+        
 
 @app.route("/edit_student", methods=['GET', 'POST'])
 def edit_student():
@@ -276,6 +286,73 @@ def edit_student():
         id = request.args.get('id')  
         student = Student.query.filter_by(id=id).first()
         return render_template("edit_student.html", student=student, bg_image = bg_image('settings'))
+
+# Adds all the cohorts students at once into the student table
+# only accepts .xlsx files
+@app.route('/upload_file', methods = ['POST'])
+def upload_file():
+
+    if request.method == 'POST':     
+        file = request.files['file']
+        # checks if user uploads no file
+        if file.filename == '':
+            flash('No file selected', 'error')
+            return redirect('/students')
+        if file and allowed_file(file.filename):
+            # TODO prevent people from uploading malicious files with the 
+            # function below
+            # file = secure_filename(file.filename)
+
+            # ----------- Reads Files and pushes to student table -------------
+            df = pd.read_excel(file)
+            # df.columns is a list of all the table headings, 'First Name' and 'Last Name'
+            # in this case.
+            first_name = list(df[df.columns[0]])
+            last_name = list(df[df.columns[1]])
+            #  names is a list of tupples in the form of (first_name, last_name)
+            names = zip(first_name,last_name)
+
+            # creates a record for row in students.xlsx into the student table.
+            for name in names:
+                student = Student(name[0].title(), name[1].title())
+                db.session.add(student)
+            db.session.commit()
+            flash('Students entered in the system!', 'info')
+            return redirect('students')
+        else:
+            #  User uploaded the wrong type of files
+            flash('You can only upload excel files with .xlsx extension', 'error')
+            return redirect('/students')
+
+
+@app.route('/download_att', methods=['GET'])
+def download_list():
+        
+        date_att = request.args.get('date_att')
+        att_list = Attendance.query.filter_by(date_now=date_att).all()
+        first_names = []
+        last_names = []
+        date = []
+        present =[]
+        
+        # Get the information from attedance table and populates the arrays above
+        for att in att_list:
+            first_names.append(att.owner.first_name)
+            last_names.append(att.owner.last_name)
+            date.append(att.date_now)
+            present.append(att.present)
+
+        # creates a dictionary where names,date, present, will be the headers for the spreadsheet
+        # and the values(lists, see above) are rows for each column.
+        df = pd.DataFrame({'First Name': first_names, 'Last Name': last_names, 
+            'Date': date, 'Present': present})
+        output = BytesIO()
+        writer = pd.ExcelWriter(output, engine = 'xlsxwriter')
+        df.to_excel(writer, 'Sheet1', index=False)
+        writer.save()
+        output.seek(0)
+
+        return send_file(output, attachment_filename='attendance:' + str(att.date_now) +'.xlsx',as_attachment=True)
 
 if __name__ == "__main__":
     app.run()
