@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Students table + add and edit buttons go here</h2>
+<div class="container" id="teacher">
+<div class="card large m6 lc-blue-text" id="teacher-card">
+    <span class="card-title">Students table</span>
 
-<!-- table -->
-<table>
+    <!-- table -->
+    <table>
         <tr>
             <th>First Name</th>
             <th>Last Name</th> 
         </tr>
-{% for student in students %}
+    {% for student in students %}
     <tr>
         <td>{{student.first_name}}</td>
         <td>{{student.last_name}}</td>
     <!-- each individual edit button -->
         <td><button><a href="/edit_student?id={{student.id}}">Edit</a></button></td>
     </tr>
-{% endfor %}
-</table>
+    {% endfor %}
+    </table>
 
-<h4>Add Student</h4>
-<!-- input form of first and last name, and pin, cohort, city -->
+    <h4>Add Student</h4>
+    <!-- input form of first and last name, and pin, cohort, city -->
 
-<form method="post">
+    <form method="post">
     <table>
         <tr>
 
@@ -38,17 +40,19 @@
         </tr>
     </table>
     <input type="submit" value="Add Student">
-</form>
+    </form>
 
-<!-- Adds all the cohorts students at once into the student table
-     only accepts .xlsx files -->
+    <!-- Adds all the cohorts students at once into the student table
+        only accepts .xlsx files -->
     <br>
     <br>
     <h3>Add roster for this cohort.</h3>
-     <form action = "/upload_file" method = "POST" enctype = "multipart/form-data">
+        <form action = "/upload_file" method = "POST" enctype = "multipart/form-data">
         <input type = "file" name = "file" /><br><br>
         <input type = "submit"/>
     </form>
     <br>
     <br>
+</div>
+</div>
 {% endblock %}

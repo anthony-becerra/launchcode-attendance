@@ -1,48 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Attendance</h2>
-{% if attendance|length == 0 %}
+<div class="container" id="teacher">
+<div class="card large hoverable m6 lc-blue-text" id="teacher-card">
+    <span class="card-title">Attendance</span>
+    {% if attendance|length == 0 %}
 
-<form action="/" method="POST">
-    <select name="date_now">
-    {% for date in dates %}
-      <option value="{{date.date_now}}">{{date.date_now}}</option>
-    {% endfor %}
-    </select>
-    <br><br>
-    <input type="submit">
-  </form>
-{% else %}
-    <ul>
-        {% for att in attendance %}
-        <hr>
-        <li>
-          <!-- <input type="hidden" name="att.date_now" value={{att.date_now}} /> -->
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.date_now }}</a> </span> </h2> 
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.first_name }} </span> </h2>      
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.last_name }} </span> </h2>                    
-        
-        </li>
-        <hr>
+    <form action="/" method="POST">
+        <select name="date_now">
+        {% for date in dates %}
+        <option value="{{date.date_now}}">{{date.date_now}}</option>
         {% endfor %}
-    </ul>
-{% endif %}
-<!-- table -->
-<table>
+        </select>
+        <br><br>
+        <input type="submit">
+    </form>
+    {% else %}
+        <ul>
+            {% for att in attendance %}
+            <hr>
+            <li>
+            <!-- <input type="hidden" name="att.date_now" value={{att.date_now}} /> -->
+            <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.date_now }}</a> </span> </h2> 
+            <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.first_name }} </span> </h2>      
+            <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.last_name }} </span> </h2>                    
+            
+            </li>
+            <hr>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <!-- table -->
+    <table>
+            <tr>
+                <th>Dates</th>
+            </tr>
+        {% for date in dates%}
         <tr>
-            <th>Dates</th>
+            <td>{{date.date_now}}</td>
+            <td><a href="">View</a> </td>
+            <td><a href="/download_att?date_att={{date.date_now}}">Download</a> </td>
+            <td><button><a >Edit</a></button></td>
         </tr>
-    {% for date in dates%}
-    <tr>
-        <td>{{date.date_now}}</td>
-        <td><a href="">View</a> </td>
-        <td><a href="/download_att?date_att={{date.date_now}}">Download</a> </td>
-        <td><button><a >Edit</a></button></td>
-    </tr>
-    {%endfor%}
+        {%endfor%}
 
-</table>
-
-
-
+    </table>
+</div>
+</div>
 {% endblock %}

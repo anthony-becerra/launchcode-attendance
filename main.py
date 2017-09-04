@@ -188,14 +188,14 @@ def student_login():
             flash("Wrong Pin!", 'error')
             err = True
         if err == True:
-            return render_template('student_login.html', tit l e = 'Student Login', students = students, bg_image = bg_image('student'))
+            return render_template('student_login.html', title = 'Student Login', students = students, bg_image = bg_image('student'))
         else:
             # no validation error
             # make student present in attendance table
             student_att.present = True     
             db.session.commit()
             flash(student.first_name.title()+" Signed in!", 'info')
-            return render_template('student_login.html', tit l e = 'Student Login', students=students, bg_image = bg_image('student'))
+            return render_template('student_login.html', title = 'Student Login', students=students, bg_image = bg_image('student'))
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
@@ -204,7 +204,7 @@ def student_login():
             flash('Please create today\'s attendance list first (Press \'START DAY\' button)' , 'error')
             return redirect('/')
         
-        return render_template('student_login.html', tit l e = 'Student Login', students=students, bg_image = bg_image('student'))
+        return render_template('student_login.html', title = 'Student Login', students=students, bg_image = bg_image('student'))
 
 # Allows students to change their pin the very first time
 # (first time an attendance list is created) the sign in.
