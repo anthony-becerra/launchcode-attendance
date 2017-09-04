@@ -13,6 +13,7 @@
     <script type="text/javascript" src="{{ url_for('static',filename='js/plugins.js') }}"></script>
     <title>{{ title }}</title>
     <style>
+        /*** Tags ***/
         body {
             display: flex;
             min-height: 100vh;
@@ -27,6 +28,15 @@
             background-size: cover;
             background-color: rgba(092,147,206,1) !important;
         }
+        nav .brand-logo{
+            font-size: 1.75rem;
+        }
+        nav li a{
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+        }
+        /*** Classes ***/
         .tabs .tab a:hover, .tabs .tab a.active{
             color: rgba(092,147,206,1) !important;
         }
@@ -36,18 +46,11 @@
         .indicator{
             background-color: rgba(092,147,206,1) !important;
         }
-        nav .brand-logo{
-            font-size: 1.75rem;
-        }
-        nav li a{
-            font-weight: 700;
-            text-transform: uppercase;
-        }
         .dropdown-content li>span{
             color: #344A5F !important;
         }
         .dropdown-content li>span:hover{
-            background-color: rgba(92, 147, 206,.2);
+            background-color: rgba(092, 147, 206,.2);
         }
         .dropdown-content li>a{
             color: white !important;
@@ -61,6 +64,34 @@
         .page-footer .footer-copyright{
             background-color: rgba(51,51,51,0.1) !important;
         }
+        .error{
+            background-color: #F0400F !important;
+        }
+        .info{
+            background-color: seagreen !important;
+        }
+        .btn{
+            background-color: #F47753 !important;
+        }
+        .btn:hover{
+            background-color: #F0400F !important;
+        }
+        .lc-blue-text{
+            color: #344A5F !important;
+        }
+        .lc-blue{
+            background-color: #344A5F !important;
+        }
+        .lc-light-blue{
+            background-color: #5C93CE !important;
+        }
+        .lc-orange{
+            background-color: #F0400F !important;
+        }
+        .lc-light-orange{
+            background-color: #F47753 !important;
+        }
+        /*** ID's ***/
         #teacher-card{
             margin: 3rem 0;
             height: auto;
@@ -97,36 +128,6 @@
             vertical-align: center;
             font-size: 1.25rem;
             letter-spacing: 1px;
-        }
-        .error{
-            background-color: #F0400F !important;
-        }
-        .info{
-            background-color: seagreen !important;
-        }
-        .btn{
-            background-color: #F47753 !important;
-        }
-        .btn:hover{
-            background-color: #F0400F !important;
-        }
-        .lc-blue-text{
-            color: #344A5F !important;
-        }
-        nav li a.lc-blue-text:hover{
-            color: #5C93CE !important;
-        }
-        .lc-blue{
-            background-color: #344A5F !important;
-        }
-        .lc-light-blue{
-            background-color: #5C93CE !important;
-        }
-        .lc-orange{
-            background-color: #F0400F !important;
-        }
-        .lc-light-orange{
-            background-color: #F47753 !important;
         }
     </style>
     <script>
