@@ -188,14 +188,14 @@ def student_login():
             flash("Wrong Pin!", 'error')
             err = True
         if err == True:
-            return render_template('student_login.html', tit l e = 'Student Login', students = students, bg_image = bg_image('student'))
+            return render_template('student_login.html', title = 'Student Login', students = students, bg_image = bg_image('student'))
         else:
             # no validation error
             # make student present in attendance table
             student_att.present = True     
             db.session.commit()
             flash(student.first_name.title()+" Signed in!", 'info')
-            return render_template('student_login.html', tit l e = 'Student Login', students=students, bg_image = bg_image('student'))
+            return render_template('student_login.html', title = 'Student Login', students=students, bg_image = bg_image('student'))
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
@@ -204,7 +204,7 @@ def student_login():
             flash('Please create today\'s attendance list first (Press \'START DAY\' button)' , 'error')
             return redirect('/')
         
-        return render_template('student_login.html', tit l e = 'Student Login', students=students, bg_image = bg_image('student'))
+        return render_template('student_login.html', title = 'Student Login', students=students, bg_image = bg_image('student'))
 
 # Allows students to change their pin the very first time
 # (first time an attendance list is created) the sign in.
@@ -240,7 +240,7 @@ def change_pin():
             err = True
 
         if err == True:
-            return render_template('change_pin.html',student=student, title = 'Change Pin', bg_image = bg_image('student'))
+            return render_template('change_pin.html', student = student, title = 'Change Pin', bg_image = bg_image('student'))
 
         # change pin in the user table
         student.pin = pin
@@ -254,6 +254,7 @@ def change_pin():
 def attendance():
     if request.method == 'POST':
         date_now = request.form['date_now']
+        
         attendance = Attendance.query.filter_by(date_now=date_now).all()
         return render_template("attendance.html", attendance = attendance, bg_image = bg_image('settings'))
     else:
@@ -285,7 +286,7 @@ def edit_student():
     else:
         id = request.args.get('id')  
         student = Student.query.filter_by(id=id).first()
-        return render_template("edit_student.html", student=student, bg_image = bg_image('settings'))
+        return render_template("edit_student.html", student = student, bg_image = bg_image('settings'))
 
 # Adds all the cohorts students at once into the student table
 # only accepts .xlsx files
@@ -347,12 +348,12 @@ def download_list():
         df = pd.DataFrame({'First Name': first_names, 'Last Name': last_names, 
             'Date': date, 'Present': present})
         output = BytesIO()
-        writer = pd.ExcelWriter(output, engine = 'xlsxwriter')
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
         df.to_excel(writer, 'Sheet1', index=False)
         writer.save()
         output.seek(0)
 
-        return send_file(output, attachment_filename='attendance:' + str(att.date_now) +'.xlsx',as_attachment=True)
+        return send_file(output, attachment_filename = 'attendance:' + str(att.date_now) + '.xlsx',as_attachment=True)
 
 if __name__ == "__main__":
     app.run()
