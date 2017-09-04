@@ -56,7 +56,7 @@ def students():
         return redirect('/students')
 
     students = Student.query.all()
-    return render_template('students.html', students = students, bg_image = bg_image('settings'))
+    return render_template('students.html', title = 'Students View', students = students, bg_image = bg_image('settings'))
 
 @app.route("/teacher_signup", methods=['POST'])
 def teacher_signup():
@@ -168,8 +168,7 @@ def student_login():
         student_id = request.form['student_id']
         pin = request.form['pin']
         student = Student.query.get(student_id)
-        student_att = Attendance.query.filter_by(owner_id = student_id,
-                 date_now = date.today()).first()
+        student_att = Attendance.query.filter_by(owner_id = student_id, date_now = date.today()).first()
         
         ### Validation ###
         err = False
@@ -188,14 +187,14 @@ def student_login():
             flash("Wrong Pin!", 'error')
             err = True
         if err == True:
-            return render_template('student_login.html', title = 'Student Login', students = students, bg_image = bg_image('student'))
+            return render_template('student_login.html', title = 'Student Login', student_err = student, students = students, bg_image = bg_image('student'))
         else:
             # no validation error
             # make student present in attendance table
             student_att.present = True     
             db.session.commit()
             flash(student.first_name.title()+" Signed in!", 'info')
-            return render_template('student_login.html', title = 'Student Login', students=students, bg_image = bg_image('student'))
+            return render_template('student_login.html', title = 'Student Login', students = students, bg_image = bg_image('student'))
     else:
         attendance_exists = Attendance.query.filter_by(date_now = date.today()).first()
 
@@ -204,7 +203,7 @@ def student_login():
             flash('Please create today\'s attendance list first (Press \'START DAY\' button)' , 'error')
             return redirect('/')
         
-        return render_template('student_login.html', title = 'Student Login', students=students, bg_image = bg_image('student'))
+        return render_template('student_login.html', title = 'Student Login', students = students, bg_image = bg_image('student'))
 
 # Allows students to change their pin the very first time
 # (first time an attendance list is created) the sign in.
@@ -215,7 +214,7 @@ def change_pin():
         student_id = request.args.get('id')
         student = Student.query.get(student_id)
 
-        return render_template('change_pin.html', student=student, title = 'Change Pin', bg_image = bg_image('student'))
+        return render_template('change_pin.html', title = 'Change Pin', student = student, bg_image = bg_image('student'))
     else:
         student_id = request.form['student_id']
         student = Student.query.get(student_id)
@@ -240,7 +239,7 @@ def change_pin():
             err = True
 
         if err == True:
-            return render_template('change_pin.html', student = student, title = 'Change Pin', bg_image = bg_image('student'))
+            return render_template('change_pin.html', title = 'Change Pin', student = student, bg_image = bg_image('student'))
 
         # change pin in the user table
         student.pin = pin
@@ -256,11 +255,11 @@ def attendance():
         date_now = request.form['date_now']
         
         attendance = Attendance.query.filter_by(date_now=date_now).all()
-        return render_template("attendance.html", attendance = attendance, bg_image = bg_image('settings'))
+        return render_template("attendance.html", title = 'Attendance View', attendance = attendance, bg_image = bg_image('settings'))
     else:
         # dates = Attendance.query.distinct(Attendance.date_now)
         dates = db.session.query(Attendance.date_now).distinct()
-        return render_template("attendance.html", dates=dates)
+        return render_template("attendance.html", title = 'Attendance View', dates = dates, bg_image = bg_image('settings'))
         
 
 @app.route("/edit_student", methods=['GET', 'POST'])
@@ -286,7 +285,7 @@ def edit_student():
     else:
         id = request.args.get('id')  
         student = Student.query.filter_by(id=id).first()
-        return render_template("edit_student.html", student = student, bg_image = bg_image('settings'))
+        return render_template("edit_student.html", title = 'Edit Student', student = student, bg_image = bg_image('settings'))
 
 # Adds all the cohorts students at once into the student table
 # only accepts .xlsx files
@@ -319,7 +318,7 @@ def upload_file():
                 db.session.add(student)
             db.session.commit()
             flash('Students entered in the system!', 'info')
-            return redirect('students')
+            return redirect('/students')
         else:
             #  User uploaded the wrong type of files
             flash('You can only upload excel files with .xlsx extension', 'error')
