@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- <div class="container" id="teacher"> -->
-<!-- <div class="card large lc-blue-text" id="teacher-card"> -->
-    <!-- <div class="card-content"> -->
-        <!-- <span class="card-title">Attendance</span> -->
+<div class="container row">
+    <div class="card large hoverable col s12 lc-blue-text" id="settings-card">
         {% if attendance|length == 0 %}
         <form action="/" method="POST">
             <select name="date_now">
@@ -18,7 +16,6 @@
             <ul>
                 {% for att in attendance %}
                 <hr>
-                <!-- <input type="hidden" name="att.date_now" value={{att.date_now}} /> -->
                 <li>{{ att.date_now }}</li>
                 <li>{{ att.owner.first_name }}</li>
                 <li>{{ att.owner.last_name }}</li>
@@ -26,21 +23,28 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <!-- table -->
-        <table>
-                <tr>
-                    <th>Dates</th>
-                </tr>
-            {% for date in dates%}
-            <tr>
-                <td>{{date.date_now}}</td>
-                <td><a href="">View</a> </td>
-                <td><a href="/download_att?date_att={{date.date_now}}">Download</a> </td>
-                <td><button><a >Edit</a></button></td>
-            </tr>
-            {%endfor%}
-        </table>
-    <!-- </div> -->
-<!-- </div> -->
-<!-- </div> -->
+        <div class="row">
+            <div class="col s12">
+                <table class="responsive-table centered highlight">
+                    <thead>
+                        <tr>
+                            <th>Dates</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for date in dates%}
+                        <tr>
+                            <td>{{date.date_now}}</td>
+                            <td><a class="btn disabled" href="">View</a>
+                                <a class="btn" href="/download_att?date_att={{ date.date_now }}">Download</a>
+                                <a class='btn caution disabled' href="">Edit</a>
+                            </td>
+                        </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,99 +1,99 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container row">
-<div class="card large hoverable col s12 lc-blue-text" id="students-card">
-    <div class="card-content">
-        {% if students %}
-        <div class="row">
-            <div class="col s6 offset-s3">
-                <span class="card-title center">Students</span>
+    <div class="card large hoverable col s12 lc-blue-text" id="settings-card">
+        <div class="card-content">
+            {% if students %}
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <span class="card-title center">Students</span>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <table class="responsive-table centered highlight">
-                    <thead>
+            <div class="row">
+                <div class="col s12">
+                    <table class="responsive-table centered highlight">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for student in students %}
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th> 
+                            <td>{{ student.first_name }}</td>
+                            <td>{{ student.last_name }}</td>
+                            <td>
+                                <a class='btn' href="/edit_student?id={{ student.id }}">Edit</a>
+                                <a class='btn caution disabled' href="/reset_pin?id={{ student.id }}">Reset Pin</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                    {% for student in students %}
-                    <tr>
-                        <td>{{ student.first_name }}</td>
-                        <td>{{ student.last_name }}</td>
-                        <td>
-                            <a class='btn' href="/edit_student?id={{ student.id }}">Edit</a>
-                            <a class='btn caution disabled' href="/reset_pin?id={{ student.id }}">Reset Pin</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {% else %}
-        <div class="row">
-            <div class="col s6 offset-s3">
-                <span class="card-title center">Add Or Upload Students</span>
-            </div>
-        </div>
-        {% endif %}
-        <div class="row">
-                <div class="col s6 offset-s3">
-                    <span class="card-title center">Add Student</span>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        <div class="row">
-            <div class="col s10 offset-s1">
-                <div class="row">
-                    <form action="/add_student" method="POST">
-                    <div class="col s12">
-                        <div class="input-field col s4 offset-s1">
-                            <label for="first_name">First Name</label>
-                            <input class='validate' id='first_name' name="first_name" type="text" value='{{ first_name }}'>
-                        </div>
-                        <div class="input-field col s4">
-                            <label for="last_name">Last Name</label>
-                            <input class='validate' id='last_name' name="last_name" type="text" value='{{ last_name }}'>
-                        </div>
-                        <div class="col s1">
-                            <button class="btn-floating waves-effect waves-light lc-light-orange left" type="submit" name="action"><i class="material-icons">add</i></button>
-                        </div>
-                    </div>
-                    </form>
-                </div>   
-            </div>
-        </div>
-        <div class="row">
+            {% else %}
+            <div class="row">
                 <div class="col s6 offset-s3">
-                    <span class="card-title center">Upload Students Table</span>
+                    <span class="card-title center">Add Or Upload Students</span>
                 </div>
             </div>
-        <div class="row">
-            <div class="col s10 offset-s1">
-                <div class="row">
-                    <form action="/upload_file" method="POST" enctype="multipart/form-data">
-                    <div class="col s12">
-                        <div class="file-field input-field col s8 offset-s1">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" name="file">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                            </div>
-                        </div>
-                        <div class="col s1">
-                            <button class="btn-floating waves-effect waves-light lc-light-orange left" type="submit" name="action"><i class="material-icons">file_upload</i></button>
-                        </div>
+            {% endif %}
+            <div class="row">
+                    <div class="col s6 offset-s3">
+                        <span class="card-title center">Add Student</span>
                     </div>
-                    </form>
-                </div>   
+                </div>
+            <div class="row">
+                <div class="col s10 offset-s1">
+                    <div class="row">
+                        <form action="/add_student" method="POST">
+                        <div class="col s12">
+                            <div class="input-field col s4 offset-s1">
+                                <label for="first_name">First Name</label>
+                                <input class='validate' id='first_name' name="first_name" type="text" value='{{ first_name }}'>
+                            </div>
+                            <div class="input-field col s4">
+                                <label for="last_name">Last Name</label>
+                                <input class='validate' id='last_name' name="last_name" type="text" value='{{ last_name }}'>
+                            </div>
+                            <div class="col s1">
+                                <button class="btn-floating waves-effect waves-light lc-light-orange left" type="submit" name="action"><i class="material-icons">add</i></button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>   
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col s6 offset-s3">
+                        <span class="card-title center">Upload Students Table</span>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col s10 offset-s1">
+                    <div class="row">
+                        <form action="/upload_file" method="POST" enctype="multipart/form-data">
+                        <div class="col s12">
+                            <div class="file-field input-field col s8 offset-s1">
+                                <div class="btn">
+                                    <span>File</span>
+                                    <input type="file" name="file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                            <div class="col s1">
+                                <button class="btn-floating waves-effect waves-light lc-light-orange left" type="submit" name="action"><i class="material-icons">file_upload</i></button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>   
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}
