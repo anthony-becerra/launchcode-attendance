@@ -286,7 +286,6 @@ def edit_student():
         student.pin = pin
         student.cohort = cohort
         student.city = city
-
         db.session.commit()
         return redirect('/students')
     else:
