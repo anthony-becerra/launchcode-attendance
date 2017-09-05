@@ -9,7 +9,6 @@ import val
 import pandas as pd 
 from io import BytesIO # built-in in python, no need to install
 import xlsxwriter
-from werkzeug.utils import secure_filename
 
 def bg_image(key=None):
     bg_images = {'index':'cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg',
@@ -140,10 +139,12 @@ def teacher_login():
             return redirect('/')
         elif teacher and not check_hash(password, teacher.password):
             flash("Wrong Password!", 'error')
+            return render_template('teacher_login.html', title = 'Login', login='active', bg_image = bg_image('teacher'))
         elif not teacher:
             flash("Wrong Email!", 'error')
-
-    return render_template('teacher_login.html', title = 'Login', login = 'active', bg_image = bg_image('teacher'))
+            return render_template('teacher_login.html', title = 'Login', login='active', bg_image = bg_image('teacher'))
+    else:
+        return render_template('teacher_login.html', title = 'Login', login='active', bg_image = bg_image('teacher'))
 
 @app.route('/start_day')
 def start_day():
