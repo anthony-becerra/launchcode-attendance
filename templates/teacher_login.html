@@ -1,65 +1,71 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container" id="teacher-login">
-<div class="card large hoverable lc-blue-text" id="teacher-login-card">
-    <div class="card-tabs text">
-        <ul class="tabs tabs-fixed-width">
-            <li class="tab"><a class="{{ login }}" href="#login">Login</a></li>
-            <li class="tab"><a class="{{ signup }}" href="#signup">Signup</a></li>
-        </ul>
+<div class="container row">
+<div class="card medium hoverable lc-blue-text col s6 offset-s3" id="teacher-login-card">
+    <div class="row">
+        <div class="card-tabs text">
+            <ul class="tabs tabs-fixed-width">
+                <li class="tab"><a class="{{ login }}" href="#login">Login</a></li>
+                <li class="tab"><a class="{{ signup }}" href="#signup">Signup</a></li>
+            </ul>
+        </div>
     </div>
     <div class="card-content">
         <div id="login">
             <form class="col s12" action="/teacher_login" method="post">
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s10 offset-s1">
                         <label for="email">E-mail</label>
                         <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s10 offset-s1">
                         <label for="password">Password</label>
                         <input class='validate' id="password" name="password" type="password">
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn waves-effect waves-light lc-light-orange right" type="submit" name="action">Login</button>
+                    <div class="col s2 offset-s8">
+                        <button class="btn waves-effect waves-light lc-light-orange right" type="submit" name="action">Login</button>
+                    </div>
                 </div>
             </form>
         </div>
         <div id="signup">
             <form class="col s12" action="/teacher_signup" method="post">
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s5 offset-s1">
                         <label for="firstname">First Name</label>
                         <input class='validate' id='firstname' name="firstname" type="text" value='{{ firstname }}'>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s5">
                         <label for="lastname">Last Name</label>
                         <input class='validate' id='lastname' name="lastname" type="text" value='{{ lastname }}'>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s10 offset-s1">
                         <label for="email">E-mail</label>
                         <input class='validate' id='email' name="email" type="text" value='{{ email }}'>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s10 offset-s1">
                         <label for="password">Password</label>
                         <input class="validate" id="password" name="password" type="password">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s10 offset-s1">
                         <label for="confirm">Confirm Password</label>
                         <input class="validate" id="confirm" name="confirm" type="password">
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn waves-effect waves-light lc-light-orange right" type="submit" name="action">Signup</button>
+                    <div class="col s2 offset-s8">
+                        <button class="btn waves-effect waves-light lc-light-orange right" type="submit" name="action">Signup</button>
+                    </div>
                 </div>
             </form>
         </div>
