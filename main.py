@@ -328,8 +328,8 @@ def upload_file():
 @app.route('/download_att', methods=['GET'])
 def download_list():
         
-        date_selected = request.args.get('date_selected')
-        att_list = Attendance.query.filter_by(date_now=date_selected).all()
+        date_att = request.args.get('date_att')
+        att_list = Attendance.query.filter_by(date_now=date_att).all()
         first_names = []
         last_names = []
         date = []
