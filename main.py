@@ -26,17 +26,24 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+
+@app.before_request 
+def require_login():
+    allowed_routes = ['teacher_login'] # List of routes user can see without logging in.
+    if request.endpoint not in allowed_routes and 'email' not in session:
+        return redirect('/teacher_login')
+
 # Main View
 @app.route('/')
 def index():
-    session['email'] = "lol@gmail.com"
-    return render_template('index.html', title = 'LaunchCode Attendance', bg_image = bg_image())
+    #session['email'] = "lol@gmail.com" >>> Test for session without using teacher account
+    return render_template('index.html')
 
 # Logout
 @app.route('/logout')
 def logout():
   del session['email']
-  return redirect('/')
+  return redirect('/teacher_login')
 
 # Attendance List
 @app.route('/attendance_list', methods=["POST", "GET"])
