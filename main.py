@@ -9,7 +9,6 @@ import val
 import pandas as pd 
 from io import BytesIO # built-in in python, no need to install
 import xlsxwriter
-from werkzeug.utils import secure_filename
 
 def bg_image(key=None):
     bg_images = {'index':'cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg',
