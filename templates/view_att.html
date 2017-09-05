@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- <div class="container" id="teacher"> -->
+<!-- <div class="card large lc-blue-text" id="teacher-card"> -->
+    <!-- <span class="card-title">Students table</span> -->
+    <div>
+        <!-- table -->
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>First Name</th>
+                <th>First Name</th>
+                <th>Present</th> 
+            </tr>
+        {% for att in att_list %}
+        <tr>
+            <td>{{att.date_now}}</td>
+            <td>{{att.owner.first_name}}</td>
+            <td>{{att.owner.last_name}}</td>
+            <td>{{att.present}}</td>
+        <!-- each individual edit button -->
+        <td><button><a href="/edit_att?student_id={{att.owner_id}}&date_selected={{att.date_now}}">Edit</a></button></td>
+        </tr>
+        {% endfor %}
+        </table>
+{% endblock %}

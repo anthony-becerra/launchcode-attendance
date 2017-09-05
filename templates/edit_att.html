@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Student</h2>
+<!-- input form of first and last name, and pin, cohort, city -->
+
+<form  action = '/edit_att' method="post">
+    <table>
+        <tr>
+            <td><label for="last_name">Date</label></td>
+                <td>
+                    {{att_student.date_now}}
+                </td>
+            </tr>
+        <tr>
+            
+
+            <td><label for="first_name">First Name</label></td>
+            <td>
+                {{att_student.owner.first_name}}
+            </td>
+        </tr>
+        <tr>
+            <td><label for="last_name">Last Name</label></td>
+            <td>
+                {{att_student.owner.last_name}}
+            </td>
+        </tr>
+        <tr>
+            <!-- <td><label for="present">Present</label></td>
+            <td>
+                <input name="present" type="text" value="{{att_student.present}}">
+            </td> -->
+            
+            <td><label for="present">Present</label></td>
+            <td>
+                <select name="present" id="present">
+                        <option value="Present" selected>Select option</option>
+                        <option value="Present">Present</option>
+                        <option value="Not Present">Not Present</option> 
+                </select>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="att_id" value="{{att_student.id}}" />
+    <input type="submit" value="Save Changes">
+</form>
+
+{% endblock %}
