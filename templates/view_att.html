@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container row">
+    <div class="card large col s12 lc-blue-text" id="settings-card">
+        <div class="card-content">
+            <span class="card-title">Students table</span>
+            <!-- table -->
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>First Name</th>
+                    <th>First Name</th>
+                    <th>Present</th> 
+                </tr>
+            {% for att in att_list %}
+            <tr>
+                <td>{{att.date_now}}</td>
+                <td>{{att.owner.first_name}}</td>
+                <td>{{att.owner.last_name}}</td>
+                <td>{{att.present}}</td>
+            <!-- each individual edit button -->
+            <td><button><a href="/edit_att?student_id={{att.owner_id}}&date_selected={{att.date_now}}">Edit</a></button></td>
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -328,8 +328,8 @@ def upload_file():
 @app.route('/download_att', methods=['GET'])
 def download_list():
         
-        date_att = request.args.get('date_att')
-        att_list = Attendance.query.filter_by(date_now=date_att).all()
+        date_selected = request.args.get('date_selected')
+        att_list = Attendance.query.filter_by(date_now=date_selected).all()
         first_names = []
         last_names = []
         date = []
@@ -341,7 +341,7 @@ def download_list():
             last_names.append(att.owner.last_name)
             date.append(att.date_now)
             present.append(att.present)
-
+        
         # creates a dictionary where names,date, present, will be the headers for the spreadsheet
         # and the values(lists, see above) are rows for each column.
         df = pd.DataFrame({'First Name': first_names, 'Last Name': last_names, 
@@ -353,6 +353,42 @@ def download_list():
         output.seek(0)
 
         return send_file(output, attachment_filename = 'attendance:' + str(att.date_now) + '.xlsx',as_attachment=True)
+
+@app.route('/view_att', methods = ['GET'])
+def view_att():
+    if request.method == 'GET':
+        date_selected = request.args.get('date_selected')
+        
+        att_list = Attendance.query.filter_by(date_now = date_selected).all()
+        return render_template('view_att.html', att_list = att_list, bg_image = bg_image('settings'))
+    
+
+@app.route('/edit_att', methods = ['GET','Post'])
+def edit_att():
+    if request.method == 'GET':
+        student_id= request.args.get('student_id')
+        date_selected = request.args.get('date_selected')
+        
+        att_student = Attendance.query.filter_by(owner_id = student_id,
+            date_now = date_selected).first()
+        flash('Select an option from below.',
+             'info')
+        return render_template('edit_att.html', att_student = att_student, bg_image = bg_image('settings'))
+    else:
+        att_id = request.form['att_id']
+        present = request.form['present']
+        if present == 'Present':
+            present = True
+        else:
+            present = False
+        att = Attendance.query.filter_by(id=att_id).first()
+        att_list = Attendance.query.filter_by(date_now = att.date_now).all()
+
+        att.present = present
+        db.session.commit()
+        flash(att.owner.first_name + ' attendance changed!', 'info')
+        return render_template('view_att.html', att_list = att_list, bg_image = bg_image('settings'))
+
 
 if __name__ == "__main__":
     app.run()
