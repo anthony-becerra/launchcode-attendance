@@ -11,7 +11,7 @@
             <div class="row">
                 <form class="col s12" action="/edit_student" method="post">
                     <div class="row">
-                        <input type="hidden" name"student_id" value="{{ student.id }}"></input>
+                        <input type="hidden" name="student_id" value="{{ student.id }}">
                         <div class="input-field col s10 offset-s1">
                             <label for="first_name">First Name</label>
                             <input class="validate" id="first_name" name="first_name" type="text" value='{{ student.first_name }}'>
