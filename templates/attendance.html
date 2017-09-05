@@ -1,29 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if attendance|length == 0 %}
-
-<form method='post'>
-    <select name="date_now">
-    {% for date in dates %}
-      <option value="{{date.date_now}}">{{date.date_now}}</option>
-    {% endfor %}
-    </select>
-    <br><br>
-    <input type="submit">
-  </form>
-{% else %}
-    <ul>
-        {% for att in attendance %}
-        <hr>
-        <li>
-          <!-- <input type="hidden" name="att.date_now" value={{att.date_now}} /> -->
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.date_now }}</a> </span> </h2> 
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.first_name }} </span> </h2>      
-          <h2> <span style="display:inline-block; padding-left:1%;"> {{ att.owner.last_name }} </span> </h2>                    
-        
-        </li>
-        <hr>
-        {% endfor %}
-    </ul>
-{% endif %}
+<div class="container row">
+    <div class="card large hoverable col s12 lc-blue-text" id="settings-card">
+        <div class="card-content">
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <span class="card-title center">Attendance</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <table class="responsive-table centered highlight">
+                        <thead>
+                            <tr>
+                                <th>Dates</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for date in dates%}
+                            <tr>
+                                <td>{{date.date_now}}</td>
+                                <td><a class="btn" href="/view_att?date_selected={{date.date_now}}">View</a>
+                                    <a class="btn" href="/download_att?date_att={{ date.date_now }}">Download</a>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container row">
+    <div class="card hoverable col s4 offset-s4 lc-blue-text" id="student-login-card">
+        <div class="card-content">
+            <div class="row">
+                <div class="col s8 offset-s2">
+                    <span class="card-title center">Change Pin</span>
+                </div>
+            </div>
+            <div class="row">
+                <form class="col s12" action="/change_pin" method="post">
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            <select name="student_id" id="student">
+                                <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
+                                <label for="student">Students</label>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6 offset-s3">
+                            <label for="pin">Pin</label>
+                            <input class="validate" id="pin" name="pin" type="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6 offset-s3">
+                            <label for="confirm_pin">Confirm Pin</label>
+                            <input class="validate" id="confirm_pin" name="confirm_pin" type="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 offset-s5">
+                            <button class="btn waves-effect waves-light right" type="submit" name="action">Change Pin</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

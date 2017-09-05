@@ -1,0 +1,50 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    }
+main {
+flex: 1 0 auto;
+}
+.lc-blue{
+    background-color: #344A5F;
+}
+.lc-light-blue{
+    background-color: #5C93CE;
+}
+.card.large {
+    height: 550px;
+}
+.tabs .tab a:hover, .tabs .tab a.active{
+    color: rgba(000,188,212,1) !important;
+}
+.tabs .tab a{
+    color: rgba(000,188,212,0.7);
+}
+.indicator{
+    background-color: rgba(000,188,212,1) !important;
+}
+nav .brand-logo{
+    font-size: 1.75rem;
+}
+.dropdown-content li>a, .dropdown-content li>span{
+    color: whitesmoke;
+}
+.dropdown-content{
+    min-width: 165px;
+}
+#teacher-card{
+    margin: 3rem 0 3rem 0;
+}
+#teacher{
+    width: 50%;
+}
+#student-card{
+    margin: 6rem 0 6rem 0;
+}
+#student{
+    width: 30%;
+}
+#index{
+    margin: 12rem 0 12rem 0;
+}

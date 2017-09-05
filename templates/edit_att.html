@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container row">
+    <div class="card hoverable col s4 offset-s4 lc-blue-text" id="student-login-card">
+        <div class="card-content">
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <span class="card-title center">Edit Student Attendance</span>
+                </div>
+            </div>
+            <div class="row">
+                <form class="col s12" action = '/edit_att' method="post">
+                    <div class="row">
+                        <div class="col s11">
+                            <table>
+                                <tr>
+                                    <td><label for="last_name">Date</label></td>
+                                        <td>
+                                            {{att_student.date_now}}
+                                        </td>
+                                    </tr>
+                                <tr>
+                                    <td><label for="first_name">First Name</label></td>
+                                    <td>
+                                        {{att_student.owner.first_name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="last_name">Last Name</label></td>
+                                    <td>
+                                        {{att_student.owner.last_name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="present">Present</label></td>
+                                    <td>
+                                        <select name="present" id="present">
+                                                {% if att_student.present == True %}
+                                                <option value="Present" selected>Present</option>
+                                                <option value="Not Present">Not Present</option>
+                                                {% else %}
+                                                <option value="Present">Present</option>
+                                                <option value="Not Present" selected>Not Present</option>
+                                                {% endif %}
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s7 offset-s2">
+                            <input type="hidden" name="att_id" value="{{att_student.id}}" />
+                            <button class="btn waves-effect waves-light right" type="submit" name="action">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
