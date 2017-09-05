@@ -363,7 +363,7 @@ def view_att():
         return render_template('view_att.html', att_list = att_list, bg_image = bg_image('settings'))
     
 
-@app.route('/edit_att', methods = ['GET','Post'])
+@app.route('/edit_att', methods = ['GET','POST'])
 def edit_att():
     if request.method == 'GET':
         student_id= request.args.get('student_id')
