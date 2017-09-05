@@ -352,7 +352,7 @@ def download_list():
         writer.save()
         output.seek(0)
 
-        return send_file(output, attachment_filename = 'attendance:' + str(att.date_now) + '.xlsx',as_attachment=True)
+        return send_file(output, attachment_filename = 'attendance:' + str(att.date_now) + '.xlsx', as_attachment=True)
 
 @app.route('/view_att', methods = ['GET'])
 def view_att():
