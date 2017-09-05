@@ -2,47 +2,52 @@
 {% block content %}
 <div class="container row">
     <div class="card large hoverable col s12 lc-blue-text" id="settings-card">
-        {% if attendance|length == 0 %}
-        <form action="/" method="POST">
-            <select name="date_now">
-            {% for date in dates %}
-            <option value="{{date.date_now}}">{{date.date_now}}</option>
-            {% endfor %}
-            </select>
-            <br><br>
-            <input type="submit">
-        </form>
-        {% else %}
-            <ul>
-                {% for att in attendance %}
-                <hr>
-                <li>{{ att.date_now }}</li>
-                <li>{{ att.owner.first_name }}</li>
-                <li>{{ att.owner.last_name }}</li>
-                <hr>
+        <div class="card-content">
+            {% if attendance|length == 0 %}
+            <form action="/" method="POST">
+                <select name="date_now">
+                {% for date in dates %}
+                <option value="{{date.date_now}}">{{date.date_now}}</option>
                 {% endfor %}
-            </ul>
-        {% endif %}
-        <div class="row">
-            <div class="col s12">
-                <table class="responsive-table centered highlight">
-                    <thead>
-                        <tr>
-                            <th>Dates</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for date in dates%}
-                        <tr>
-                            <td>{{date.date_now}}</td>
-                            <td><a class="btn disabled" href="">View</a>
-                                <a class="btn" href="/download_att?date_att={{ date.date_now }}">Download</a>
-                                <a class='btn caution disabled' href="">Edit</a>
-                            </td>
-                        </tr>
-                    {%endfor%}
-                    </tbody>
-                </table>
+                </select>
+                <div class="row">
+                    <div class="col s2 offset-s8">
+                        <button class="btn waves-effect waves-light lc-light-orange right disabled" type="submit" name="action">Submit</button>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+                <ul>
+                    {% for att in attendance %}
+                    <hr>
+                    <li>{{ att.date_now }}</li>
+                    <li>{{ att.owner.first_name }}</li>
+                    <li>{{ att.owner.last_name }}</li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="row">
+                <div class="col s12">
+                    <table class="responsive-table centered highlight">
+                        <thead>
+                            <tr>
+                                <th>Dates</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for date in dates%}
+                            <tr>
+                                <td>{{date.date_now}}</td>
+                                <td><a class="btn disabled" href="">View</a>
+                                    <a class="btn" href="/download_att?date_att={{ date.date_now }}">Download</a>
+                                    <a class='btn caution disabled' href="">Edit</a>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
