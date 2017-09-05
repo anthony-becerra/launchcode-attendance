@@ -23,9 +23,10 @@
                     <tr>
                         <td>{{ student.first_name }}</td>
                         <td>{{ student.last_name }}</td>
-                        <td><a class='btn' href="/edit_student?id={{ student.id }}">Edit</a>
-                            <a class='btn disabled' href="/reset_pin?id={{ student.id }}">Reset Pin</a>
-                            <a class='btn disabled red darken-1' href="/remove_student?id={{ student.id }}">Remove</a></td>
+                        <td>
+                            <a class='btn' href="/edit_student?id={{ student.id }}">Edit</a>
+                            <a class='btn caution disabled' href="/reset_pin?id={{ student.id }}">Reset Pin</a>
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
