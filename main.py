@@ -371,8 +371,7 @@ def edit_att():
         
         att_student = Attendance.query.filter_by(owner_id = student_id,
             date_now = date_selected).first()
-        flash('Select an option from below.',
-             'info')
+        flash('Select an option from below', 'info')
         return render_template('edit_att.html', att_student = att_student, bg_image = bg_image('settings'))
     else:
         att_id = request.form['att_id']
@@ -386,7 +385,7 @@ def edit_att():
 
         att.present = present
         db.session.commit()
-        flash(att.owner.first_name + ' attendance changed!', 'info')
+        flash(att.owner.first_name.title() + '\'s attendance changed!', 'info')
         return render_template('view_att.html', att_list = att_list, bg_image = bg_image('settings'))
 
 

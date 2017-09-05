@@ -8,30 +8,6 @@
                     <span class="card-title center">Attendance</span>
                 </div>
             </div>
-            {% if attendance|length == 0 %}
-            <form action="/" method="POST">
-                <select name="date_now">
-                {% for date in dates %}
-                <option value="{{date.date_now}}">{{date.date_now}}</option>
-                {% endfor %}
-                </select>
-                <div class="row">
-                    <div class="col s2 offset-s8">
-                        <button class="btn waves-effect waves-light lc-light-orange right disabled" type="submit" name="action">Submit</button>
-                    </div>
-                </div>
-            </form>
-            {% else %}
-                <ul>
-                    {% for att in attendance %}
-                    <hr>
-                    <li>{{ att.date_now }}</li>
-                    <li>{{ att.owner.first_name }}</li>
-                    <li>{{ att.owner.last_name }}</li>
-                    <hr>
-                    {% endfor %}
-                </ul>
-            {% endif %}
             <div class="row">
                 <div class="col s12">
                     <table class="responsive-table centered highlight">
@@ -46,7 +22,6 @@
                                 <td>{{date.date_now}}</td>
                                 <td><a class="btn" href="/view_att?date_selected={{date.date_now}}">View</a>
                                     <a class="btn" href="/download_att?date_att={{ date.date_now }}">Download</a>
-                                    <a class="btn" href="/view_att?date_selected={{date.date_now}}">Edit</a>
                                 </td>
                             </tr>
                         {%endfor%}

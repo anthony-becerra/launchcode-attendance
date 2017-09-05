@@ -3,26 +3,38 @@
 <div class="container row">
     <div class="card large col s12 lc-blue-text" id="settings-card">
         <div class="card-content">
-            <span class="card-title">Students table</span>
-            <!-- table -->
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>First Name</th>
-                    <th>First Name</th>
-                    <th>Present</th> 
-                </tr>
-            {% for att in att_list %}
-            <tr>
-                <td>{{att.date_now}}</td>
-                <td>{{att.owner.first_name}}</td>
-                <td>{{att.owner.last_name}}</td>
-                <td>{{att.present}}</td>
-            <!-- each individual edit button -->
-            <td><button><a href="/edit_att?student_id={{att.owner_id}}&date_selected={{att.date_now}}">Edit</a></button></td>
-            </tr>
-            {% endfor %}
-            </table>
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <span class="card-title center">Students Attendance</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s10 offset-s1">
+                    <table class="responsive-table centered highlight">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>First Name</th>
+                                <th>First Name</th>
+                                <th>Present</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for att in att_list %}
+                            <tr>
+                                <td>{{att.date_now}}</td>
+                                <td>{{att.owner.first_name}}</td>
+                                <td>{{att.owner.last_name}}</td>
+                                <td>{{att.present}}</td>
+                                <td>
+                                    <a class="btn" href="/edit_att?student_id={{att.owner_id}}&date_selected={{att.date_now}}">Edit</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
