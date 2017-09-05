@@ -152,6 +152,9 @@ def start_day():
     students_att = Attendance.query.filter_by(date_now = date.today()).all()
     
     # checks if not attendace list has been created for the day.
+    if not students:
+        flash('No students in the database yet', 'error')
+        return redirect('/students')
     if not students_att:
         if students:
         # pushes all students into the attendance table, creating 
