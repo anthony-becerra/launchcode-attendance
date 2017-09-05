@@ -164,7 +164,7 @@ def student_login():
         student = Student.query.get(student_id)
         student_att = Attendance.query.filter_by(owner_id = student_id,
                  date_now = date.today())
-
+        
         if student and student.pin == pin:
             # make student present in attendance table
             student_att.present = True
