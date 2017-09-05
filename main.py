@@ -36,7 +36,7 @@ def require_login():
 @app.route('/')
 def index():
     #session['email'] = "lol@gmail.com" >>> Test for session without using teacher account
-    return render_template('index.html')
+    return render_template('index.html', title = 'LaunchCode Attendance', bg_image = bg_image())
 
 # Logout
 @app.route('/logout')
