@@ -1,42 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container row" id="student-login">
-<div class="card medium hoverable col s12 lc-blue-text" id="student-login-card">
+<div class="container row">
+<div class="card hoverable col s4 offset-s4 lc-blue-text" id="student-login-card">
     <div class="card-content">
         <div class="row">
-            <div class="col s6 offset-s3">
-                    <span class="card-title center">Students</span>
+            <div class="col s8 offset-s2">
+                <span class="card-title center">Student Sign-In</span>
+            </div>
+        </div>
+        <form action="/student_login" method="post">
+            <div class="row">
+                <div class="input-field col s10 offset-s1">
+                    <select name="student_id" id="students">
+                        {% for student in students %}
+                        {% if student_err %}
+                        {% if student_err.id == student.id %}
+                        <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% else %}
+                        <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% endif %}
+                        {% else %}
+                        <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                        <label for="students">Students</label>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 offset-s3">
+                        <label for="pin">Pin</label>
+                        <input class="validate" id="pin" name="pin" type="password">
+                    </div>
                 </div>
             </div>
-        </div>
-        <span class="card-title" >Student Sign-In</span>
-        <div class="row">
-            <form action="/student_login" method="post">
-            <div class="input-field col s10 offset-s1">
-                <select name="student_id" id="students">
-                    {% for student in students %}
-                    {% if student_err %}
-                    {% if student_err.id == student.id %}
-                    <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
-                    {% else %}
-                    <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
-                    {% endif %}
-                    {% else %}
-                    <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
-                    {% endif %}
-                    {% endfor %}
-                    <label for="students">Students</label>
-                </select>
-            </div><br><br>
-            <div class="input-field col s6 offset-s3">
-                <label for="pin">Pin</label>
-                <input class="validate" id="pin" name="pin" type="password">
+            <div class="row">
+                <div class="col s6 offset-s5">
+                    <button class="btn waves-effect waves-light right" type="submit" name="action">Sign-In</button>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <button class="btn waves-effect waves-light right" type="submit" name="action">Sign-In</button>
         </form>
-        </div>
     </div>
 </div>
 </div>
