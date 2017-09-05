@@ -11,7 +11,7 @@
             <div class="row">
                 <form col="col s12" action="/student_login" method="post">
                     <div class="row">
-                        <div class="input-field col s10 offset-s1">
+                        <div class="input-field col s12">
                             <select name="student_id" id="students">
                                 {% for student in students %}
                                 {% if student_err %}
@@ -36,8 +36,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s6 offset-s5">
-                        <button class="btn waves-effect waves-light right" type="submit" name="action">Sign-In</button>
+                    <div class="col s6 offset-s3">
+                        <button class="btn waves-effect waves-light center" type="submit" name="action">Sign-In</button>
                     </div>
                 </div>
                 </form>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container row">
-    <div class="card hoverable col s4 offset-s4 lc-blue-text" id="student-login-card">
+    <div class="card hoverable col s6 offset-s3 lc-blue-text" id="student-login-card">
         <div class="card-content">
             <div class="row">
                 <div class="col s6 offset-s3">
@@ -12,23 +12,21 @@
                 <form class="col s12" action="/edit_student" method="post">
                     <div class="row">
                         <input type="hidden" name="student_id" value="{{ student.id }}">
-                        <div class="input-field col s10 offset-s1">
+                        <div class="input-field col s6">
                             <label for="first_name">First Name</label>
                             <input class="validate" id="first_name" name="first_name" type="text" value='{{ student.first_name }}'>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s10 offset-s1">
+                        <div class="input-field col s6">
                             <label for="last_name">Last Name</label>
                             <input class="validate" id="last_name" name="last_name" type="text" value='{{ student.last_name }}'>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s4 offset-s1">
+                        <div class="col s4">
                             <label for="cohort">Cohort</label>
                             <input type="text" class="validate" id="cohort" name="cohort" value="{{ student.cohort }}">
                         </div>
-                        <div class="col s6">
+                        <div class="col s8">
                             <label for="city">City</label>
                             <input type="text" class="validate" id="city" name="city" value="{{ student.city }}">
                         </div>
@@ -40,11 +38,11 @@
                             </div>
                         </div>
                     <div class="row">
-                        <div class="col s6 offset-s1">
-                            <button class="btn waves-effect waves-light caution disabled" href="">Remove</button>
+                        <div class="col s4 offset-s1">
+                            <button class="btn waves-effect waves-light center caution disabled" href="">Remove</button>
                         </div>
-                        <div class="col s3">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Save</button>
+                        <div class="col s4 offset-s2">
+                            <button class="btn waves-effect waves-light center" type="submit" name="action">Save</button>
                         </div>
                     </div>
                 </form>

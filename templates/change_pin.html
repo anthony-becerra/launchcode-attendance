@@ -11,7 +11,7 @@
             <div class="row">
                 <form class="col s12" action="/change_pin" method="post">
                     <div class="row">
-                        <div class="input-field col s10 offset-s1">
+                        <div class="input-field col s12">
                             <select name="student_id" id="student">
                                 <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
                                 <label for="student">Students</label>
@@ -31,8 +31,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s6 offset-s5">
-                            <button class="btn waves-effect waves-light right" type="submit" name="action">Change Pin</button>
+                        <div class="col s6 offset-s3">
+                            <button class="btn waves-effect waves-light center" type="submit" name="action">Change Pin</button>
                         </div>
                     </div>
                 </form>
