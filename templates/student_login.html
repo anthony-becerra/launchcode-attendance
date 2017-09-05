@@ -8,23 +8,25 @@
                     <span class="card-title center">Student Sign-In</span>
                 </div>
             </div>
-            <form action="/student_login" method="post">
-                <div class="row">
-                    <div class="input-field col s10 offset-s1">
-                        <select name="student_id" id="students">
-                            {% for student in students %}
-                            {% if student_err %}
-                            {% if student_err.id == student.id %}
-                            <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
-                            {% else %}
-                            <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
-                            {% endif %}
-                            {% else %}
-                            <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
-                            {% endif %}
-                            {% endfor %}
-                            <label for="students">Students</label>
-                        </select>
+            <div class="row">
+                <form col="col s12" action="/student_login" method="post">
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            <select name="student_id" id="students">
+                                {% for student in students %}
+                                {% if student_err %}
+                                {% if student_err.id == student.id %}
+                                <option value="{{ student.id }}" selected>{{ student.last_name }}, {{ student.first_name }}</option>
+                                {% else %}
+                                <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                                {% endif %}
+                                {% else %}
+                                <option value="{{ student.id }}">{{ student.last_name }}, {{ student.first_name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                                <label for="students">Students</label>
+                            </select>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6 offset-s3">
@@ -38,7 +40,8 @@
                         <button class="btn waves-effect waves-light right" type="submit" name="action">Sign-In</button>
                     </div>
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
