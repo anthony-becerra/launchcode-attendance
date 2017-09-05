@@ -10,7 +10,7 @@ import val
 
 @app.before_request 
 def require_login():
-    allowed_routes = ['teacher_login'] # List of routes user can see without logging in.
+    allowed_routes = ['teacher_login', 'teacher_signup'] # List of routes user can see without logging in.
     if request.endpoint not in allowed_routes and 'email' not in session:
         return redirect('/teacher_login')
 
@@ -106,7 +106,8 @@ def teacher_signup():
         new_teacher = Teacher(first, last, email, password)
         db.session.add(new_teacher)
         db.session.commit()
-        session['email'] = username
+        session['email'] = email
+        return redirect("/")
 
 @app.route("/teacher_login", methods=['GET', 'POST'])
 def teacher_login():
@@ -121,6 +122,9 @@ def teacher_login():
         elif teacher and not check_hash(password, teacher.password):
             return render_template('teacher_login.html', title = 'Login', login='active',
                 password_err = 'Wrong password')
+        elif not teacher:
+            return render_template('teacher_login.html', title = 'Login', login='active',
+                email_err = 'Wrong email')
     else:
         return render_template('teacher_login.html', title = 'Login', login='active')
 
