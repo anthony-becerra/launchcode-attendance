@@ -1,20 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-        <!-- table -->
-        <table>
-            <tr>
-                <th>Dates</th>
-            </tr>
-            {% for date in dates%}
-                <tr>
-                    <td>{{date.date_now}}</td>
-                    <td><a href="/view_att?date_selected={{date.date_now}}">View</a> </td>
-                    <td><a href="/download_att?date_selected={{date.date_now}}">Download</a> </td>
-                    <td><button><a href="/view_att?date_selected={{date.date_now}}">Edit</a></button></td>
-                </tr>
-            {%endfor%}
-        </table>
-    <!-- </div> -->
-<!-- </div> -->
-<!-- </div> -->
+<div class="container row">
+    <div class="card large hoverable col s12 lc-blue-text" id="settings-card">
+        <div class="card-content">
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <span class="card-title center">Attendance</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <table class="responsive-table centered highlight">
+                        <thead>
+                            <tr>
+                                <th>Dates</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for date in dates%}
+                            <tr>
+                                <td>{{date.date_now}}</td>
+                                <td><a class="btn" href="/view_att?date_selected={{date.date_now}}">View</a>
+                                    <a class="btn" href="/download_att?date_att={{ date.date_now }}">Download</a>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

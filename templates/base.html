@@ -29,13 +29,14 @@
             background-color: rgba(092,147,206,1) !important;
         }
         nav .brand-logo{
-            font-size: 1.75rem;
+            font-size: 2rem;
+            font-weight: 400;
         }
         nav li a{
-            font-weight: 700;
+            font-weight: 400;
             font-size: 1.25rem;
             text-transform: uppercase;
-        }
+        }  
         /*** Classes ***/
         .tabs .tab a:hover, .tabs .tab a.active{
             color: rgba(092,147,206,1) !important;
@@ -65,24 +66,42 @@
             background-color: rgba(51,51,51,0.1) !important;
         }
         .error{
-            background-color: crimson !important;
+            background-color: #D50000 !important;
         }
         .info{
-            background-color: seagreen !important;
+            background-color: #00c853 !important;
+        }
+        .caution{
+            background-color: #E53935 !important;
+        }
+        .caution:hover{
+            background-color: #D50000 !important;
         }
         .btn{
-            background-color: #F47753 !important;
+            background-color: #F47753;
         }
         .btn:hover{
+            background-color: #F0400F;
+        }
+        .btn-floating{
+            background-color: #F47753;
+        }
+        .btn-floating:hover{
             background-color: #F0400F !important;
         }
         .lc-blue-text{
             color: #344A5F !important;
         }
+        .lc-light-blue-text{
+            color: #5C93CE !important;
+        }
         .lc-blue{
             background-color: #344A5F !important;
         }
         .lc-light-blue{
+            background-color: #5C93CE !important;
+        }
+        .lc-light-blue:hover{
             background-color: #5C93CE !important;
         }
         .lc-orange{
@@ -92,29 +111,16 @@
             background-color: #F47753 !important;
         }
         /*** ID's ***/
-        #teacher-card{
-            margin: 3rem 40rem;
+        #settings-card{
+            margin-top: 2rem;
             height: auto;
         }
-        #teacher{
-            width: 40%;
-        }
-        #student-card{
-            margin: 6rem 0;
+        #teacher-login-card{
+            margin-top: 4rem;
             height: auto;
         }
-        #student{
-            width: 20%;
-        }
-        #change-card{
-            margin: 6rem 0;
-            height: auto;
-        }
-        #change{
-            width: 20%;
-        }
-        #att-date-card{
-            margin: 2rem 0;
+        #student-login-card{
+            margin-top: 6rem;
             height: auto;
         }
         #index{
@@ -128,6 +134,9 @@
             vertical-align: center;
             font-size: 1.25rem;
             letter-spacing: 1px;
+        }
+        #index-btn:hover{
+            background-color: #F0400F !important;
         }
     </style>
     <script>
