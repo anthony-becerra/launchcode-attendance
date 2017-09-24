@@ -153,7 +153,7 @@
             // Flash Messages Toasts
             {% with messages = get_flashed_messages(with_categories=True) %}
             {% for class, message in messages %}
-                Materialize.toast('{{ message }}', 4000, '{{ class }}');
+                Materialize.toast('{{ message }}', 5000, '{{ class }}');
             {% endfor %}
             {% endwith %}
         });
@@ -164,7 +164,7 @@
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper white">
-                    <a href="/" class="brand-logo center lc-blue-text">LaunchCode Attendance</a>
+                    <a href="/" class="brand-logo center lc-blue-text">Launchcode Attendance</a>
                     {% if session['email'] %}
                     <ul class="left">
                         <li><a class="dropdown-button waves-effect waves-light lc-blue-text" href="#!" data-activates="dropdown"><i class="material-icons">menu</i></a></li>
